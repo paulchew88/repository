@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pc1crt.application.repositories.CatRepository;
@@ -37,6 +38,12 @@ public class WelcomeController {
         model.addAttribute("message", name);
 
         return "alt"; //view
+    }
+    @RequestMapping("/start")
+    public String Start() {
+    	
+    	
+    	return "start";
     }
 
 }
