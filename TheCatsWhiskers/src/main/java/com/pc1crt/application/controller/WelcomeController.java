@@ -26,5 +26,24 @@ public class WelcomeController {
 
         return "home"; //view
     }
+
   
+
+    // /hello?name=kotlin
+    @GetMapping("/hello")
+    public String mainWithParam(
+            @RequestParam(name = "name", required = false, defaultValue = "User") 
+			String name, Model model) {
+
+        model.addAttribute("message", name);
+
+        return "alt"; //view
+    }
+    @RequestMapping("/start")
+    public String Start() {
+    	
+    	
+    	return "start";
+    }
+
 }
