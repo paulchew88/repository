@@ -3,6 +3,7 @@ package com.pc1crt.application.model;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Room {
@@ -13,6 +14,7 @@ private RoomType roomType;
 
 public Room() {
 }
+@Id
 public int getRoomNo() {
 	return roomNo;
 }
