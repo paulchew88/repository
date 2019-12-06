@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Form Submission</title>
+<link rel="stylesheet"
+	th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="home">Paulchew</a>
+		<table align="right">
+			<tr>
+				<td><a href="login">Login</a></td>
+				<td><a href="newCustomer">Register Customer</a></td>
+				<td><a href="newCat">Register Cat</a></td>
+			</tr>
+		</table>
+	</nav>
+	<h1>Customer Form</h1>
+	<div class="form-container" align="left">
+		<form action="#" th:action="@{/form}" th:object="${cat}"
+			method="post" align="right">
+			<p>
+				Name: <input type="text" th:field="*{name}" />
+			</p>
+			<p>
+				Micro-chip Number: <input type="text" th:field="*{chipNo}" />
+			</p>
+			<p>
+				Owner Email: <input type="text" th:field="*{owner}" />
+			</p>
+			<p>
+				food plan: <select name="foodPlan">
+					<option value="standard">Standard</option>
+					<option value="luxury">Luxury</option>
+					<option value="ownFood">Use own food</option>
+				</select>
+			</p>
+			<p>
+				Vaccination date: <input type="date" th:field="*{vaccinatedDate}" />
+			</p>
+			<p>
+				Cat's Temperment: <input type="text" th:field="*{temperment}" />
+			</p>
+			<p>
+				Litter Instructions: <input type="text" th:field="*{litterType}" />
+			</p>
+			<p>
+				Other Information: <input type="text" th:field="*{otherInformatioin}" />
+			</p>
+
+			<p>
+				<input type="submit" value="Submit" /> <input type="reset"
+					value="Reset" />
+			</p>
+		</form>
+	</div>
+</body>
+</html>

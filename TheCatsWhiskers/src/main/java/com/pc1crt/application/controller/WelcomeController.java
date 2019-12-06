@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,6 @@ public class WelcomeController {
 	@Autowired
 	OwnerRepository ownerRepository;
 
-	public List<String> catName = new ArrayList<String>();
 
 	@GetMapping("/home")
 	public String main(Model model) {
@@ -51,11 +51,11 @@ public class WelcomeController {
 		return "home"; // view
 	}
 
-	@RequestMapping(value = "/form", method = RequestMethod.GET)
+	@RequestMapping(value = "/newCustomer", method = RequestMethod.GET)
 	public String customerForm(Model model) {
 		model.addAttribute("owner", new Owner());
 
-		return "form";
+		return "newCustomer";
 	}
 
 	// @RequestMapping(value="/form", method=RequestMethod.POST)
@@ -73,8 +73,8 @@ public class WelcomeController {
 	 * owner.getPostCode(),owner.getContactNumber()); ownerRepository.save(owner);
 	 */
 
-	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String submit(@Valid @ModelAttribute("employee") Owner owner, BindingResult result, ModelMap model) {
+	@RequestMapping(value = "/newCustomer", method = RequestMethod.POST)
+	public String submitCustomer(@Valid @ModelAttribute("owner") Owner owner, BindingResult result, ModelMap model) {
 
 		// model.addAttribute("tasks", owner);
 		ownerRepository.save(owner);
@@ -85,5 +85,20 @@ public class WelcomeController {
 	public String login(Model model) {
 		return "login";
 
+	}
+
+	@RequestMapping(value = "/newCat", method = RequestMethod.POST)
+	public String submitCat(@Valid @ModelAttribute("cat") Cat cat, BindingResult result, ModelMap model) {
+		
+		catRepository.save(cat);
+		
+		
+		return "result";
+	}
+	@RequestMapping(value = "/newCat", method = RequestMethod.GET)
+	public String catForm(Model model) {
+		model.addAttribute("cat", new Cat());
+
+		return "newCat";
 	}
 }

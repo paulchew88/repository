@@ -1,4 +1,4 @@
-package com.pc1crt.application.security;
+/*package com.pc1crt.application.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,15 +17,9 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
 
 	}
 
-	
-
 	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-          .authorizeRequests()
-          .anyRequest()
-          .authenticated()
-          .and()
-          .httpBasic();
-    }
-}
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().anyRequest().authenticated().and().httpBasic().and().formLogin().loginPage("/login")
+				.failureUrl("/login-error").successForwardUrl("/home");
+	}
+}*/
