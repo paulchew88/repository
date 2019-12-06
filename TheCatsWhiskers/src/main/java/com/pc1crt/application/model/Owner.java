@@ -31,6 +31,10 @@ public class Owner {
 	
 	public Owner() {}
 
+	
+	public Integer getId() {
+		return customerNumber;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -55,11 +59,11 @@ public class Owner {
 		this.email = email;
 	}
 
-	public Integer getCostomerNumber() {
+	public Integer getCustomerNumber() {
 		return customerNumber;
 	}
 
-	public void setCostomerNumber(Integer customerNumber) {
+	public void setCustomerNumber(Integer customerNumber) {
 		this.customerNumber = customerNumber;
 	}
 
