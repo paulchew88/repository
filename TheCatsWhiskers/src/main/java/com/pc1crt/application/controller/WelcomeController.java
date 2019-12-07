@@ -40,9 +40,11 @@ public class WelcomeController {
 	@Autowired
 	OwnerRepository ownerRepository;
 
+	
 
 	@GetMapping("/home")
 	public String main(Model model) {
+		List<Cat> cats = new ArrayList<Cat>();
 		model.addAttribute("message", message);
 		model.addAttribute("tasks", ownerRepository.findAll());
 
@@ -74,7 +76,7 @@ public class WelcomeController {
 	 */
 
 	@RequestMapping(value = "/newCustomer", method = RequestMethod.POST)
-	public String submitCustomer(@Valid @ModelAttribute("owner") Owner owner, BindingResult result, ModelMap model) {
+	public String submitCat(@Valid @ModelAttribute("owner") Owner owner, BindingResult result, ModelMap model) {
 
 		// model.addAttribute("tasks", owner);
 		ownerRepository.save(owner);
@@ -88,7 +90,8 @@ public class WelcomeController {
 	}
 
 	@RequestMapping(value = "/newCat", method = RequestMethod.POST)
-	public String submitCat(@Valid @ModelAttribute("cat") Cat cat, BindingResult result, ModelMap model) {
+	public String submit(@Valid @ModelAttribute("cat") Cat cat, BindingResult result, ModelMap model) {
+		
 		
 		catRepository.save(cat);
 		

@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Embeddable
 @Table(name="cat")
@@ -22,6 +24,7 @@ public class Cat {
 	@Column(name = "chip_no")
 	private Integer chipNo;
 	private MealPlan food;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate vaccinatedDate;
 	private String temperment;
 	private String litterType;
