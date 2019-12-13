@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.pc1crt.application.model.Owner;
 import com.pc1crt.application.repositories.OwnerRepository;
@@ -27,7 +28,7 @@ public class OwnerController {
 	}
 
 	@GetMapping("/api/owner/{id}")
-	public Object show(@PathVariable Integer id) {
+	public Object show(@PathVariable String id) {
 		return ownerRepository.findById(id);
 	}
 
@@ -38,37 +39,29 @@ public class OwnerController {
 	}
 
 	@PostMapping("/api/owner")
-	  public Owner create(@RequestBody Map<String, String> body){
-		Owner owner = new Owner();
-		owner.setEmail(body.get("email"));
-		owner.setFirstName(body.get("firstName"));
-		owner.setSurName(body.get("surName"));
-		owner.setHouseNumber(body.get("houseNumber"));
-		owner.setStreetName(body.get("streetName"));
-		owner.setPostCode(body.get("postCode"));
-		owner.setContactNumber(body.get("contactNumber"));
-		
-		
-		return ownerRepository.save(owner);
+	public Owner create(@RequestBody Owner owner, UriComponentsBuilder ucBuilder) {
+		if (ownerRepository.existsById(owner.getEmail()))
+			return null;
+		else
+			return ownerRepository.save(owner);
 	}
 
 	@PutMapping("/api/owner/{id}")
-	public Owner update(@PathVariable Integer id, @RequestBody Map<String, String> body) {
-		Optional<Owner> optionalOwner = ownerRepository.findById(id);
-		Owner owner = optionalOwner.get();
-		owner.setEmail(body.get("email"));
-		owner.setFirstName(body.get("firstName"));
-		owner.setSurName(body.get("surName"));
-		owner.setHouseNumber(body.get("houseNumber"));
-		owner.setStreetName(body.get("streetName"));
-		owner.setPostCode(body.get("postCode"));
-		owner.setContactNumber(body.get("contactNumber"));
-		
-		return ownerRepository.save(owner);
+	public Owner update(@RequestBody Owner owner, UriComponentsBuilder ucBuilder) {
+		if (!ownerRepository.existsById(owner.getEmail()))
+			return null;
+		else
+			return ownerRepository.save(owner);
 	}
+
+
 	@DeleteMapping("/api/owner/{id}")
-	public Boolean delete(@PathVariable Integer id) {
-		ownerRepository.deleteById(id);
-		return true;
+	public Boolean delete(@PathVariable String id) {
+		if (ownerRepository.existsById(id)) {
+			ownerRepository.deleteById(id);
+			return true;
+		} else
+			return false;
+
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pc1crt.application.model.MealPlan;
 import com.pc1crt.application.model.Room;
 import com.pc1crt.application.model.RoomType;
 import com.pc1crt.application.repositories.RoomRepository;
@@ -33,7 +35,7 @@ public class RoomController {
 	@GetMapping("/api/room/search")
 	public List<Room> search(@RequestBody Map<String,String> body){
 		String searchTerm = body.get("text");
-		return roomRepository.findByRoomType(searchTerm);
+		return roomRepository.findByRoomType(RoomType.valueOf(body.get(searchTerm)));
 	}
 	
 	@PostMapping("/api/room")
@@ -53,5 +55,14 @@ public class RoomController {
 		room.setRoomType(RoomType.valueOf(body.get("roomType")));
 		
 		return roomRepository.save(room);
+	}
+	@DeleteMapping("/api/room/{id}")
+	public Boolean delete(@PathVariable Integer id) {
+		if (roomRepository.existsById(id)) {
+			roomRepository.deleteById(id);
+			return true;
+		} else
+			return false;
+
 	}
 }

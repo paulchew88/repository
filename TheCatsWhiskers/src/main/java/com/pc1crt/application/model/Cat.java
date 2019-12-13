@@ -7,8 +7,10 @@ import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -28,25 +30,21 @@ public class Cat {
 	private LocalDate vaccinatedDate;
 	private String temperment;
 	private String litterType;
-	private String otherInformatioin;
-	@ManyToOne
+	private String otherInformation;
+	/*@OneToOne
 	@JoinColumn(name = "owner")
-	private Owner owner;
+	private Owner owner;*/
 	
 	public Cat() {}
 	
-	public Owner getOwner() {
+	/*public Owner getOwner() {
 		return owner;
 	}
 
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
-	}
-
-
-	
-	
+	}*/
 	public String getName() {
 		return name;
 	}
@@ -84,18 +82,18 @@ public class Cat {
 		this.litterType = litterType;
 	}
 	public String getOtherInformatioin() {
-		return otherInformatioin;
+		return otherInformation;
 	}
-	public void setOtherInformatioin(String otherInformatioin) {
-		this.otherInformatioin = otherInformatioin;
+	public void setOtherInformatioin(String otherInformation) {
+		this.otherInformation = otherInformation;
 	}
 
 
 	@Override
 	public String toString() {
 		return "Cat [name=" + name + ", chipNo=" + chipNo + ", food=" + food + ", vaccinatedDate=" + vaccinatedDate
-				+ ", temperment=" + temperment + ", litterType=" + litterType + ", otherInformatioin="
-				+ otherInformatioin + ", owner=" + owner + "]";
+				+ ", temperment=" + temperment + ", litterType=" + litterType + ", otherInformation="
+				+ otherInformation + /*", owner=" + owner +*/ "]";
 	}
 	
 	

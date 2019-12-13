@@ -40,8 +40,6 @@ public class WelcomeController {
 	@Autowired
 	OwnerRepository ownerRepository;
 
-	
-
 	@GetMapping("/home")
 	public String main(Model model) {
 		List<Cat> cats = new ArrayList<Cat>();
@@ -60,26 +58,11 @@ public class WelcomeController {
 		return "newCustomer";
 	}
 
-	// @RequestMapping(value="/form", method=RequestMethod.POST)
-	/*
-	 * public String customerSubmit(@ModelAttribute Owner owner, Model model) {
-	 * 
-	 * model.addAttribute("customer", owner);
-	 * 
-	 * 
-	 * String info = String.
-	 * format("Owner Submission: id = %s, firstName = %s, surName = %s, email = %s, "
-	 * + "houseNumber = %s, postCode = %s, contactNumber = %s, streetName = %s",
-	 * owner.getFirstName(), owner.getSurName(),
-	 * owner.getEmail(),owner.getHouseNumber(),owner.getId(),owner.getStreetName(),
-	 * owner.getPostCode(),owner.getContactNumber()); ownerRepository.save(owner);
-	 */
-
 	@RequestMapping(value = "/newCustomer", method = RequestMethod.POST)
 	public String submitCat(@Valid @ModelAttribute("owner") Owner owner, BindingResult result, ModelMap model) {
 
-		// model.addAttribute("tasks", owner);
 		ownerRepository.save(owner);
+
 		return "result";
 	}
 
@@ -91,13 +74,12 @@ public class WelcomeController {
 
 	@RequestMapping(value = "/newCat", method = RequestMethod.POST)
 	public String submit(@Valid @ModelAttribute("cat") Cat cat, BindingResult result, ModelMap model) {
-		
-		
+
 		catRepository.save(cat);
-		
-		
+
 		return "result";
 	}
+
 	@RequestMapping(value = "/newCat", method = RequestMethod.GET)
 	public String catForm(Model model) {
 		model.addAttribute("cat", new Cat());

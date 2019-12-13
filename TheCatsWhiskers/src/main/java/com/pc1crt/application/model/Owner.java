@@ -2,11 +2,18 @@ package com.pc1crt.application.model;
 
 
 
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -17,24 +24,23 @@ import javax.validation.constraints.NotNull;
 public class Owner {
 	private String firstName;
 	private String surName;
-	@Column(name = "email",unique = true)
-	private String email;
 	@Id
-	@GeneratedValue
 	@NotNull
-	@Column(name = "Customer_no")
-	private Integer customerNumber;
+	@Column(name = "email")
+	private String email;
 	private String StreetName;
 	private String houseNumber;
 	private String postCode;
 	private String contactNumber;
+	@Embedded
+	@ElementCollection
+	@ManyToMany
+	private List<Cat> cats;
 	
 	public Owner() {}
 
 	
-	public Integer getId() {
-		return customerNumber;
-	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -57,14 +63,6 @@ public class Owner {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Integer getCustomerNumber() {
-		return customerNumber;
-	}
-
-	public void setCustomerNumber(Integer customerNumber) {
-		this.customerNumber = customerNumber;
 	}
 
 	public String getStreetName() {
@@ -98,13 +96,21 @@ public class Owner {
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
+	public List<Cat> getCats() {
+		return cats;
+	}
+
+	public void setCats(List<Cat> cats) {
+		this.cats = cats;
+	}
 
 	@Override
 	public String toString() {
-		return "Owner [firstName=" + firstName + ", surName=" + surName + ", email=" + email + ", customerNumber="
-				+ customerNumber + ", StreetName=" + StreetName + ", houseNumber=" + houseNumber + ", postCode="
+		return "Owner [firstName=" + firstName + ", surName=" + surName + ", email=" + email + ", StreetName=" + StreetName + ", houseNumber=" + houseNumber + ", postCode="
 				+ postCode + ", contactNumber=" + contactNumber + "]";
 	}
+
+
 	
 	
 
