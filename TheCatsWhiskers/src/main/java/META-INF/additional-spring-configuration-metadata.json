@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "spring",
+    "type": "java.lang.String",
+    "description": "A description for 'spring'"
+  },
+  {
+    "name": "profiles",
+    "type": "java.lang.String",
+    "description": "A description for 'profiles'"
+  },
+  {
+    "name": "active",
+    "type": "java.lang.String",
+    "description": "A description for 'active'"
+  },
+  {
+    "name": "security",
+    "type": "java.lang.String",
+    "description": "A description for 'security'"
+  }
+]}
