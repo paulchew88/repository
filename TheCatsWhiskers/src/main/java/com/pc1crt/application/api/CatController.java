@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.aspectj.weaver.tools.cache.AsynchronousFileCacheBacking.RemoveCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.pc1crt.application.model.MealPlan;
 import com.pc1crt.application.model.Owner;
 import com.pc1crt.application.repositories.CatRepository;
 import com.pc1crt.application.repositories.OwnerRepository;
-
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
 public class CatController {
 	@Autowired
@@ -50,6 +51,7 @@ public class CatController {
 	public Cat create(@RequestBody Cat cat, UriComponentsBuilder ucBuilder) {
 		if (catRepository.existsById(cat.getChipNo()))
 			return null;
+
 		else
 			return catRepository.save(cat);
 	}
@@ -72,4 +74,5 @@ public class CatController {
 			return false;
 
 	}
+
 }

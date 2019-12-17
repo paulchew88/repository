@@ -1,4 +1,4 @@
-package com.pc1crt.application.controller;
+/*package com.pc1crt.application.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,4 +86,4 @@ public class WelcomeController {
 
 		return "newCat";
 	}
-}
+}*/

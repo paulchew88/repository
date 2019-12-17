@@ -31,20 +31,21 @@ public class Cat {
 	private String temperment;
 	private String litterType;
 	private String otherInformation;
-	/*@OneToOne
-	@JoinColumn(name = "owner")
-	private Owner owner;*/
+
 	
 	public Cat() {}
 	
-	/*public Owner getOwner() {
-		return owner;
+	public Cat(String name, @NotNull Integer chipNo, MealPlan food, LocalDate vaccinatedDate, String temperment,
+			String litterType, String otherInformation) {
+		this.name = name;
+		this.chipNo = chipNo;
+		this.food = food;
+		this.vaccinatedDate = vaccinatedDate;
+		this.temperment = temperment;
+		this.litterType = litterType;
+		this.otherInformation = otherInformation;
 	}
 
-
-	public void setOwner(Owner owner) {
-		this.owner = owner;
-	}*/
 	public String getName() {
 		return name;
 	}
@@ -81,10 +82,10 @@ public class Cat {
 	public void setLitterType(String litterType) {
 		this.litterType = litterType;
 	}
-	public String getOtherInformatioin() {
+	public String getOtherInformation() {
 		return otherInformation;
 	}
-	public void setOtherInformatioin(String otherInformation) {
+	public void setOtherInformation(String otherInformation) {
 		this.otherInformation = otherInformation;
 	}
 
@@ -93,7 +94,7 @@ public class Cat {
 	public String toString() {
 		return "Cat [name=" + name + ", chipNo=" + chipNo + ", food=" + food + ", vaccinatedDate=" + vaccinatedDate
 				+ ", temperment=" + temperment + ", litterType=" + litterType + ", otherInformation="
-				+ otherInformation + /*", owner=" + owner +*/ "]";
+				+ otherInformation + "]";
 	}
 	
 	

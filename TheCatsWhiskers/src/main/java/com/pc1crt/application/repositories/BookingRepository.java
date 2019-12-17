@@ -15,10 +15,6 @@ public interface BookingRepository extends JpaRepository<Booking, BookingKey>{
 	
 	
 
-	
-
-	
-
 
 
 }

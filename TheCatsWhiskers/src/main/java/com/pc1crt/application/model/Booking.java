@@ -38,7 +38,7 @@ public class Booking {
 	private LocalDate checkOutDate;
 	@Embedded
 	@ManyToOne
-	@JoinColumn(name = "email")
+	@JoinColumn(name = "customer_number")
 	@NotNull
 	private Owner owner;
 	

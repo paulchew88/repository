@@ -10,8 +10,10 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,11 +24,14 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 @Table(name="owner")
 public class Owner {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "customer_number")
+	private Integer customerNumber;
 	private String firstName;
 	private String surName;
-	@Id
 	@NotNull
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	private String StreetName;
 	private String houseNumber;
@@ -34,7 +39,7 @@ public class Owner {
 	private String contactNumber;
 	@Embedded
 	@ElementCollection
-	@ManyToMany
+	@OneToMany
 	private List<Cat> cats;
 	
 	public Owner() {}
@@ -103,6 +108,18 @@ public class Owner {
 	public void setCats(List<Cat> cats) {
 		this.cats = cats;
 	}
+
+	public Integer getCustomerNumber() {
+		return customerNumber;
+	}
+
+
+
+	public void setCustomerNumber(Integer customerNumber) {
+		this.customerNumber = customerNumber;
+	}
+
+
 
 	@Override
 	public String toString() {
