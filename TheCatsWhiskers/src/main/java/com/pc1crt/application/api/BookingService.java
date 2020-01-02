@@ -25,7 +25,7 @@ import com.pc1crt.application.repositories.RoomRepository;
 import com.pc1crt.application.model.*;
 
 @RestController
-public class BookingController {
+public class BookingService {
 	@Autowired
 	BookingRepository bookingRepository;
 
@@ -35,23 +35,28 @@ public class BookingController {
 	}
 
 	@GetMapping("/api/booking/{id}")
-	public Object show(@PathVariable BookingKey id) {
+	public Object show(@PathVariable Integer id) {
 		return bookingRepository.findById(id);
 	}
 
 	@GetMapping("/api/booking/search")
 	public List<Booking> search(@RequestBody Map<String, String> body) {
-		LocalDate checkIn = LocalDate.parse(body.get("checkIn"));
+		LocalDate checkIn =  LocalDate.parse(body.get("checkIn"));
 		LocalDate checkOut = LocalDate.parse(body.get("checkOut"));
 		return null;
 	}
 
 	@PostMapping("/api/booking")
 	public Booking create(Booking booking, UriComponentsBuilder ucBuilder) {
-		if (bookingRepository.existsById(booking.getId()))
-			return null;
-		else
+		if (booking.getBookingNo() != null ) {
+			if (bookingRepository.existsById(booking.getBookingNo()))
+				return null;
+			else
+				return bookingRepository.save(booking);
+		}
+		else {
 			return bookingRepository.save(booking);
+		}
 	}
 	
 
@@ -62,14 +67,13 @@ public class BookingController {
 			return bookingRepository.save(booking);
 	}
 
-	/*@DeleteMapping("/api/booking/{id}")
-	public Boolean delete(@PathVariable BookingKey id) {
-		if (bookingRepository.existsById(id)) {
-			bookingRepository.deleteById(id);
-			return true;
-		} else
-			return false;
-
-	}*/
+	@GetMapping("/api/booking/availability")
+	public List<Booking> availibility(LocalDate checkIn){
+		
+		
+		
+		return null;
+		
+	}
 
 }

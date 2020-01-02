@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Form Submission</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+		<table align="right">
+			<tr>
+				<td><a href="/login">Login</a></td>
+				<td><a href="/newCustomer">Register Customer</a></td>
+				<td><a href="/newCat">Register Cat</a></td>
+			</tr>
+		</table>
+	</nav>
+	<h1>Customer Form</h1>
+	<div class="form-container" align="left">
+		<form action="#" th:action="@{/addCat}" th:object="${owner}"
+			method="post" align="right">
+			<input type="hidden" th:field="*{customerNumber}" /> <input
+				type="hidden" th:field="*{firstName}" /> <input type="hidden"
+				th:field="*{surName}" /> <input type="hidden" th:field="*{email}" />
+			<input type="hidden" th:field="*{address.houseNumber}" /> <input
+				type="hidden" th:field="*{address.streetName}" /> <input
+				type="hidden" th:field="*{address.postCode}" /> <input
+				type="hidden" th:field="*{contactNumber}" /> <input type="hidden"
+				th:field="*{cats}" />
+
+
+
+			<div th:object="${cat}">
+				<p>
+					Name: <input type="text" th:field="*{name}" />
+				</p>
+				<p>
+					Micro-chip Number: <input type="text" th:field="*{chipNo}" />
+				</p>
+
+				<p>
+					Meal Plan: <select name="mealPlan" th:field="*{food}">
+						<option
+							th:each="mealPlan : ${T(com.pc1crt.application.model.MealPlan).values()}"
+							th:value="${mealPlan}" th:text="${mealPlan}"
+							th:selected="${mealPlan == T(com.pc1crt.application.model.MealPlan)}">
+						</option>
+					</select>
+
+				</p>
+				<p>
+					Vaccination date: <input type="date" th:value="*{vaccinatedDate}"
+						th:field="*{vaccinatedDate}" />
+				</p>
+				<p>
+					Cat's Temperment: <input type="text" th:field="*{temperment}" />
+				</p>
+				<p>
+					Litter Instructions: <input type="text" th:field="*{litterType}" />
+				</p>
+				<p>
+					Other Information: <input type="text"
+						th:field="*{otherInformation}" />
+				</p>
+
+				<p>
+					<input type="submit" value="Submit" /> <input type="reset"
+						value="Reset" />
+				</p>
+		</form>
+	</div>
+	</div>
+</body>
+</html>

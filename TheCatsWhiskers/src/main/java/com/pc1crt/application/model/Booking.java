@@ -1,6 +1,7 @@
 package com.pc1crt.application.model;
 
 import java.sql.Date;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -32,61 +33,63 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Booking {
-	@EmbeddedId
-	private BookingKey id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer bookingNo;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate checkInDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate checkOutDate;
 	@Embedded
 	@ManyToOne
 	@JoinColumn(name = "customer_number")
-	@NotNull
 	private Owner owner;
-	
-	
+	@Embedded
+	@ElementCollection
+	@OneToMany
+	private List<Cat>cats;
+
 	public Booking() {
 
 	}
 
-
-	public BookingKey getBookingId() {
-		return id;
+	public Booking(LocalDate checkInDate, LocalDate checkOutDate, @NotNull Owner owner) {
+		
+		this.checkInDate = checkInDate;
+		this.checkOutDate = checkOutDate;
+		this.owner = owner;
 	}
 
-
-	
-
-	@Transient
-	public BookingKey getId() {
-		return id;
-	}
-	@Transient
-	public void setId(BookingKey id) {
-		this.id = id;
+	public Integer getBookingNo() {
+		return bookingNo;
 	}
 
+	public void setBookingNo(Integer bookingNo) {
+		this.bookingNo = bookingNo;
+	}
+
+	public LocalDate getCheckInDate() {
+		return checkInDate;
+	}
+
+	public void setCheckInDate(LocalDate checkInDate) {
+		this.checkInDate = checkInDate;
+	}
 
 	public LocalDate getCheckOutDate() {
 		return checkOutDate;
 	}
 
-
 	public void setCheckOutDate(LocalDate checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
-
 
 	public Owner getOwner() {
 		return owner;
 	}
 
-
 	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
-
-
-	
-
-
 
 }

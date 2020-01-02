@@ -10,11 +10,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.pc1crt.application.model.Booking;
 import com.pc1crt.application.model.BookingKey;
 
-public interface BookingRepository extends JpaRepository<Booking, BookingKey>{
+public interface BookingRepository extends JpaRepository<Booking, Integer>{
 
 	
 	
-
 
 
 }

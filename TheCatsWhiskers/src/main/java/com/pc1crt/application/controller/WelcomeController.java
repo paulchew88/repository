@@ -1,4 +1,4 @@
-/*package com.pc1crt.application.controller;
+package com.pc1crt.application.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pc1crt.application.api.CatController;
+import com.pc1crt.application.api.CatService;
 import com.pc1crt.application.model.Cat;
 import com.pc1crt.application.model.Owner;
 import com.pc1crt.application.repositories.CatRepository;
@@ -37,34 +38,15 @@ public class WelcomeController {
 
 	@Autowired
 	CatRepository catRepository;
-	@Autowired
-	OwnerRepository ownerRepository;
 
-	@GetMapping("/home")
-	public String main(Model model) {
-		List<Cat> cats = new ArrayList<Cat>();
-		model.addAttribute("message", message);
-		model.addAttribute("tasks", ownerRepository.findAll());
+	@GetMapping("/")
+	public String main(Model model) {		
+		
 
-		// model.addAttribute("tasks", catName);
-
-		return "home"; // view
+		return "start"; // view
 	}
 
-	@RequestMapping(value = "/newCustomer", method = RequestMethod.GET)
-	public String customerForm(Model model) {
-		model.addAttribute("owner", new Owner());
 
-		return "newCustomer";
-	}
-
-	@RequestMapping(value = "/newCustomer", method = RequestMethod.POST)
-	public String submitCat(@Valid @ModelAttribute("owner") Owner owner, BindingResult result, ModelMap model) {
-
-		ownerRepository.save(owner);
-
-		return "result";
-	}
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -72,18 +54,6 @@ public class WelcomeController {
 
 	}
 
-	@RequestMapping(value = "/newCat", method = RequestMethod.POST)
-	public String submit(@Valid @ModelAttribute("cat") Cat cat, BindingResult result, ModelMap model) {
-
-		catRepository.save(cat);
-
-		return "result";
-	}
-
-	@RequestMapping(value = "/newCat", method = RequestMethod.GET)
-	public String catForm(Model model) {
-		model.addAttribute("cat", new Cat());
-
-		return "newCat";
-	}
-}*/
+	
+	
+}

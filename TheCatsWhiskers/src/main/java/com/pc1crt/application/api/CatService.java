@@ -25,7 +25,7 @@ import com.pc1crt.application.repositories.CatRepository;
 import com.pc1crt.application.repositories.OwnerRepository;
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
-public class CatController {
+public class CatService {
 	@Autowired
 	CatRepository catRepository;
 

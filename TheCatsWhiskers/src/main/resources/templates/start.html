@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1"/>
-<title>The cat whiskers hotel </title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Paul's playground</title>
+
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
 </head>
+
 <body>
-Welcome to the cats whiskers hotel.
+
+
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="home">Paulchew</a>
+		<table>
+			<tr>
+				<td><a href="login">Login</a></td>
+			
+			</tr>
+		</table>
+	</nav>
+<body>
+	<h2>Welcome to the cats whiskers hotel.</h2>
+	<h3>
+		<a href="/owners">List of Owners</a>
+	</h3>
+
 </body>
 </html>

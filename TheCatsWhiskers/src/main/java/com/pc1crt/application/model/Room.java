@@ -1,20 +1,28 @@
 package com.pc1crt.application.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Room {
 	@Id
 private Integer roomNo;
 private RoomType roomType;
+@Embedded
+@ElementCollection
+@OneToMany
+private List<Booking> booking;
 
 
 
-public Room() {
-}
+public Room() {}
+
 
 public Integer getRoomNo() {
 	return roomNo;
@@ -28,28 +36,14 @@ public RoomType getRoomType() {
 public void setRoomType(RoomType roomType) {
 	this.roomType = roomType;
 }
-@Override
-public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + roomNo;
-	result = prime * result + ((roomType == null) ? 0 : roomType.hashCode());
-	return result;
+public List<Booking> getBooking() {
+	return booking;
 }
-@Override
-public boolean equals(Object obj) {
-	if (this == obj)
-		return true;
-	if (obj == null)
-		return false;
-	if (getClass() != obj.getClass())
-		return false;
-	Room other = (Room) obj;
-	if (roomNo != other.roomNo)
-		return false;
-	if (roomType != other.roomType)
-		return false;
-	return true;
+public void setBooking(List<Booking> booking) {
+	this.booking = booking;
 }
+
+
+
 
 }

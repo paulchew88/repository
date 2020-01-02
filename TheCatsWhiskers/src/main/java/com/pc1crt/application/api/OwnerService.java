@@ -24,7 +24,7 @@ import com.pc1crt.application.repositories.OwnerRepository;
 
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
-public class OwnerController {
+public class OwnerService {
 	@Autowired
 	OwnerRepository ownerRepository;
 
@@ -59,13 +59,18 @@ public class OwnerController {
 
 	@PostMapping("/api/owner")
 	public Owner create(@RequestBody Owner owner, UriComponentsBuilder ucBuilder) {
-		if (ownerRepository.existsById(owner.getCustomerNumber()))
-		return null;
-		else
-		return ownerRepository.save(owner);
+		if (owner.getCustomerNumber() != null) {
+			if (ownerRepository.existsById(owner.getCustomerNumber()))
+				return null;
+			else
+				return ownerRepository.save(owner);
+		}
+		else {
+			return ownerRepository.save(owner);
+		}
 	}
 
-	@PostMapping("/api/owner/cat/{id}")
+	@PutMapping("/api/owner/{id}")
 	public Owner update(@PathVariable Integer id, @RequestBody Owner owner, UriComponentsBuilder ucBuilder) {
 		if (!ownerRepository.existsById(id))
 			return null;
@@ -101,19 +106,15 @@ public class OwnerController {
 		Owner owner = optionalOwner.get();
 		List<Cat> cats = owner.getCats();
 		System.out.println(cats);
-		/*
-		 * Iterator<Cat> it = cats.iterator(); while(it.hasNext()) { if
-		 * (it.equals(cat)){ cats.remove(it); } it.next(); }
-		 */
+
 		int found = 0;
 		Cat newCat = new Cat();
-		//List<Cat> found = new ArrayList<Cat>();
-		for(int i = 0; i< cats.size(); i++) {
-			if( cats.get(i).getChipNo() == cat.getChipNo()) {
+		for (int i = 0; i < cats.size(); i++) {
+			if (cats.get(i).getChipNo() == cat.getChipNo()) {
 				found = i;
 			}
 		}
-		
+
 		System.out.println(newCat);
 
 		cats.remove(found);

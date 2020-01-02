@@ -3,21 +3,14 @@
 <head>
 <title>Form Submission</title>
 <link rel="stylesheet"
-	th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/main.css}" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="home">Paulchew</a>
-		<table align="right">
-			<tr>
-				<td><a href="login">Login   </a></td>
-				<td><a href="newCustomer">Register Customer   </a></td>
-				<td><a href="newCat">Register Cat</a></td>
-			</tr>
-		</table>
+		<a class="navbar-brand" href="/">Home</a>
 	</nav>
 	<h1>Customer Form</h1>
 	<div class="form-container" align="left">
@@ -36,7 +29,7 @@
 						th:each="mealPlan : ${T(com.pc1crt.application.model.MealPlan).values()}"
 						th:value="${mealPlan}" 
 						th:text="${mealPlan}"
-						 th:selected="${mealPlane == T(com.pc1crt.application.model.MealPlan)}"
+						 th:selected="${mealPlan == T(com.pc1crt.application.model.MealPlan)}"
 						>
 						</option>
 						</select>
@@ -53,7 +46,7 @@
 			</p>
 			<p>
 				Other Information: <input type="text"
-					th:field="*{otherInformatioin}" />
+					th:field="*{otherInformation}" />
 			</p>
 
 			<p>

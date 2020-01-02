@@ -3,56 +3,59 @@
 <head>
 <title>Form Submission</title>
 <link rel="stylesheet"
-	th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/main.css}" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="home">Paulchew</a>
+		<a class="navbar-brand" href="/">Home</a>
 		<table align="right">
 			<tr>
-				<td><a href="login">Login</a></td>
-				<td><a href="newCustomer">Register Customer</a></td>
-				<td><a href="newCat">Register Cat</a></td>
+				<td><a href="/login">Login</a></td>
+
 			</tr>
 		</table>
 	</nav>
 	<h1>Customer Form</h1>
+	<h3><a href="/owners">Back to owners</a>
+			</h3>
 	<div class="form-container" align="left">
-	<form action="#" th:action="@{/newCustomer}" th:object="${owner}"
-		method="post" align="right">
-		<p>
-			First Name: <input type="text" th:field="*{firstName}" />
-		</p>
-		<p>
-			Last Name: <input type="text" th:field="*{surName}" />
-		</p>
-		<p>
-			Email: <input type="text" th:field="*{email}" />
-		</p>
-		<p>
-				Cat Chip: <input type="text" th:field="*{cats}" />
+		<form action="#" th:action="@{/newCustomer}" th:object="${owner}"
+			method="post" align="right">
+			
+			<input type="hidden"th:field="*{customerNumber}" />
+			<p>
+				First Name: <input type="text" th:field="*{firstName}" />
 			</p>
-		<p>
-			House Number/Name: <input type="text" th:field="*{houseNumber}" />
-		</p>
-		<p>
-			Street: <input type="text" th:field="*{streetName}" />
-		</p>
-		<p>
-			Post Code: <input type="text" th:field="*{postCode}" />
-		</p>
-		<p>
-			Contact No: <input type="text" th:field="*{contactNumber}" />
-		</p>
+			<p>
+				Last Name: <input type="text" th:field="*{surName}" />
+			</p>
+			<p>
+				Email: <input type="text" th:field="*{email}" />
+			</p>
+		
+			
+			<p>
+				HouseNumber: <input type="text" th:field="*{address.houseNumber}" />
+			</p>
+			<p>
+				Street Name: <input type="text" th:field="*{address.streetName}" />
+			</p>
+			<p>
+				PostCode: <input type="text" th:field="*{address.postCode}" />
+			</p>
+			<p>
+				Contact No: <input type="text" th:field="*{contactNumber}" />
+			</p>
 
-		<p>
-			<input type="submit" value="Submit" /> <input type="reset"
-				value="Reset" />
-		</p>
-	</form>
+			<p>
+				<input type="submit" value="Submit" /> <input type="reset"
+					value="Reset" />
+			</p>
+			
+		</form>
 	</div>
 </body>
 </html>

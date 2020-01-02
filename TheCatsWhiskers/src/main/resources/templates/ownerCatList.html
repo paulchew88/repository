@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Paul's playground</title>
+
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+	
+	</nav>
+
+	<main role="main" class="container">
+
+
+		<h1>Customers</h1>
+		<a href="/owners">Back to Owners</a>
+		<table class="table table-striped">
+			<tr>
+				<th>Name</th>
+				<th>ChipNo</th>
+				<th>Food Plan</th>
+				<th>Vaccinated Date</th>
+				<th>Temperment</th>
+				<th>Litter Instructions</th>
+				<th>Other Information</th>
+
+				<th>Actions</th>
+			</tr>
+			<tr th:each="cat : ${cats}">
+				<td th:text="${cat.name}"></td>
+				<td th:text="${cat.chipNo}"></td>
+				<td th:text="${cat.food}"></td>
+				<td th:text="${cat.vaccinatedDate}"></td>
+				<td th:text="${cat.temperment}"></td>
+				<td th:text="${cat.litterType}"></td>
+				<td th:text="${cat.otherInformation}"></td>
+
+				<td><a href="#" th:href="@{/cat/update/} + ${cat.chipNo}">Edit</a>
+					<a href="#" th:href="@{/owner/cat/delete/} + ${cat.chipNo}" >remove
+						cat from owner</a></td>
+
+			</tr>
+		</table>
+		<a href="/owners">Back to Owners</a>
+		
+
+
+	</main>
+
+
+
+</body>
+</html>

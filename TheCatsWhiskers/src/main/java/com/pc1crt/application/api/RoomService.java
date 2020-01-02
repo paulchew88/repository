@@ -1,5 +1,6 @@
 package com.pc1crt.application.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,14 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.pc1crt.application.model.Booking;
+import com.pc1crt.application.model.Cat;
 import com.pc1crt.application.model.MealPlan;
+import com.pc1crt.application.model.Owner;
 import com.pc1crt.application.model.Room;
 import com.pc1crt.application.model.RoomType;
 import com.pc1crt.application.repositories.RoomRepository;
 
 @RestController
-public class RoomController {
+public class RoomService {
 	@Autowired
 	RoomRepository roomRepository;
 	
@@ -39,22 +44,31 @@ public class RoomController {
 	}
 	
 	@PostMapping("/api/room")
-	public Room create(@RequestBody Map<String,String> body) {
-		Room room = new Room();
-		room.setRoomNo(Integer.valueOf(body.get("roomNo")));
-		room.setRoomType(RoomType.valueOf(body.get("roomType")));
-		
-		return roomRepository.save(room);		
+	public Room add(@RequestBody Room room, UriComponentsBuilder ucBuilder) {
+		if (room.getRoomNo() != null) {
+			if (roomRepository.existsById(room.getRoomNo()))
+				return null;
+			else
+				return roomRepository.save(room);
+		}
+		else {
+			return roomRepository.save(room);
+		}
+	
 	}
 
 	@PutMapping("/api/room/{id}")
-	public Room update(@PathVariable Integer id,@RequestBody Map<String,String> body) {
-		Optional<Room> optinalRoom = roomRepository.findById(id);
-		Room room = optinalRoom.get();
-		room.setRoomNo(Integer.valueOf(body.get("roomNo")));
-		room.setRoomType(RoomType.valueOf(body.get("roomType")));
-		
-		return roomRepository.save(room);
+	public Room update(@RequestBody Room room, UriComponentsBuilder ucBuilder) {
+		if (room.getRoomNo() != null) {
+			if (roomRepository.existsById(room.getRoomNo()))
+				return null;
+			else
+				return roomRepository.save(room);
+		}
+		else {
+			return roomRepository.save(room);
+		}
+	
 	}
 	@DeleteMapping("/api/room/{id}")
 	public Boolean delete(@PathVariable Integer id) {
@@ -65,4 +79,26 @@ public class RoomController {
 			return false;
 
 	}
+	
+	@GetMapping("/api/room/booking/{id}")
+	public List<Booking> getBookings(@PathVariable Integer id){
+		List<Booking> bookings = new ArrayList<Booking>();
+		Optional<Room> optionalRoom = roomRepository.findById(id);
+		Room room = optionalRoom.get();
+		bookings = room.getBooking();
+		
+		return bookings;
+		
+	}
+	@PostMapping("/api/room/booking/add/{id}")
+	public Room addBooking(@PathVariable Integer id, @RequestBody Booking booking, UriComponentsBuilder ucBuilder) {
+		Optional<Room> optionalRoom = roomRepository.findById(id);
+		Room room = optionalRoom.get();
+		List<Booking> bookings = room.getBooking();
+		bookings.add(booking);
+		room.setBooking(bookings);
+
+		return roomRepository.save(room);
+	}
 }
+

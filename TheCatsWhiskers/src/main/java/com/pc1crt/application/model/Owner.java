@@ -1,7 +1,5 @@
 package com.pc1crt.application.model;
 
-
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,13 +17,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
 @Entity
 @Embeddable
-@Table(name="owner")
+@Table(name = "owner")
 public class Owner {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "customer_number")
 	private Integer customerNumber;
 	private String firstName;
@@ -33,18 +30,23 @@ public class Owner {
 	@NotNull
 	@Column(name = "email", unique = true)
 	private String email;
-	private String StreetName;
-	private String houseNumber;
-	private String postCode;
+	@Embedded
+	private Address address;
 	private String contactNumber;
 	@Embedded
 	@ElementCollection
-	@OneToMany
 	private List<Cat> cats;
-	
-	public Owner() {}
 
-	
+	public Owner() {
+	}
+
+	public List<Cat> getCats() {
+		return cats;
+	}
+
+	public void setCats(List<Cat> cats) {
+		this.cats = cats;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -70,30 +72,6 @@ public class Owner {
 		this.email = email;
 	}
 
-	public String getStreetName() {
-		return StreetName;
-	}
-
-	public void setStreetName(String streetName) {
-		StreetName = streetName;
-	}
-
-	public String getHouseNumber() {
-		return houseNumber;
-	}
-
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
-	}
-
-	public String getPostCode() {
-		return postCode;
-	}
-
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-
 	public String getContactNumber() {
 		return contactNumber;
 	}
@@ -101,34 +79,42 @@ public class Owner {
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
-	public List<Cat> getCats() {
-		return cats;
-	}
-
-	public void setCats(List<Cat> cats) {
-		this.cats = cats;
-	}
 
 	public Integer getCustomerNumber() {
 		return customerNumber;
 	}
 
-
-
 	public void setCustomerNumber(Integer customerNumber) {
 		this.customerNumber = customerNumber;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
 
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	@Override
 	public String toString() {
-		return "Owner [firstName=" + firstName + ", surName=" + surName + ", email=" + email + ", StreetName=" + StreetName + ", houseNumber=" + houseNumber + ", postCode="
-				+ postCode + ", contactNumber=" + contactNumber + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Owner [customerNumber=");
+		builder.append(customerNumber);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", surName=");
+		builder.append(surName);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", contactNumber=");
+		builder.append(contactNumber);
+		builder.append(", cats=");
+		builder.append(cats);
+		builder.append("]");
+		return builder.toString();
 	}
-
-
-	
-	
 
 }
