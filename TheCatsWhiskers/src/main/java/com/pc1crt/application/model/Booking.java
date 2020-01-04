@@ -41,23 +41,29 @@ public class Booking {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate checkOutDate;
 	@Embedded
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_number")
 	private Owner owner;
 	@Embedded
 	@ElementCollection
 	@OneToMany
-	private List<Cat>cats;
+	private List<Cat> cats;
+	@Embedded
+	@ManyToOne
+	@JoinColumn(name = "room")
+	private Room room;
 
 	public Booking() {
-
 	}
 
-	public Booking(LocalDate checkInDate, LocalDate checkOutDate, @NotNull Owner owner) {
-		
+	public Booking(Integer bookingNo, LocalDate checkInDate, LocalDate checkOutDate, Owner owner, List<Cat> cats,
+			Room room) {
+		this.bookingNo = bookingNo;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.owner = owner;
+		this.cats = cats;
+		this.room = room;
 	}
 
 	public Integer getBookingNo() {
@@ -90,6 +96,22 @@ public class Booking {
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
+	}
+
+	public List<Cat> getCats() {
+		return cats;
+	}
+
+	public void setCats(List<Cat> cats) {
+		this.cats = cats;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 }

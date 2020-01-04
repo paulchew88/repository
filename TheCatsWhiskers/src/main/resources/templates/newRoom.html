@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Form Submission</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+	</nav>
+	<h1>Customer Form</h1>
+	<h3><a href="/rooms">Back to Rooms</a>
+			</h3>
+	<div class="form-container" align="left">
+		<form action="#" th:action="@{/newRoom}" th:object="${room}"
+			method="post" align="right">
+			<p>
+				Name: <input type="text" th:field="*{roomNo}" />
+			</p>
+			
+			<p>
+				Meal Plan: <select name="roomType"th:field="*{roomType}">
+					<option
+						th:each="roomType : ${T(com.pc1crt.application.model.RoomType).values()}"
+						th:value="${roomType}" 
+						th:text="${roomType}"
+						 th:selected="${roomType == T(com.pc1crt.application.model.RoomType)}"
+						>
+						</option>
+						</select>
+				
+			</p>
+			
+
+			<p>
+				<input type="submit" value="Submit" /> <input type="reset"
+					value="Reset" />
+			</p>
+		</form>
+	</div>
+</body>
+</html>

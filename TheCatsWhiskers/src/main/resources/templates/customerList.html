@@ -45,12 +45,10 @@
 				<td th:text="${owner.email}"></td>
 				<td th:text="${owner.address}"></td>
 				<td th:text="${owner.contactNumber}"></td>
-				<td><a href="#"
-					th:href="@{/owner/update/} + ${owner.customerNumber}">Edit</a> <a
-					href="#" th:href="@{/owner/delete/} + ${owner.customerNumber}">Delete</a>
-					<a href="#" th:href="@{/owner/cat/} + ${owner.customerNumber}">View
-						Cats</a> <a href="#"
-					th:href="@{/owner/cat/add/} + ${owner.customerNumber}">Add Cat</a>
+				<td><a href="#" th:href="@{/owner/update/} + ${owner.customerNumber}">Edit</a>
+					<a href="#" th:href="@{/owner/delete/} + ${owner.customerNumber}">Delete</a>
+					<a href="#" th:href="@{/owner/cat/} + ${owner.customerNumber}">View Cats</a> 
+					<a href="#"	th:href="@{/owner/cat/add/} + ${owner.customerNumber}">Add Cat</a>
 
 				</td>
 

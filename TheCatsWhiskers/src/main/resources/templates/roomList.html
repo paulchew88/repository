@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Paul's playground</title>
+
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+	
+	</nav>
+
+	<main role="main" class="container">
+
+
+		<h1>Rooms</h1>
+		<h3><a href="/newRoom">Add Room</a></h3>
+		<table class="table table-striped">
+			<tr>
+				<th>Room Number</th>
+				<th>Room Type</th>
+				
+				<th>Actions</th>
+			</tr>
+			<tr th:each="room : ${rooms}">
+				<td th:text="${room.roomNo}"></td>
+				<td th:text="${room.roomType}"></td>
+				
+
+				<td>
+				<a href="#" th:href="@{/room/update/} + ${room.roomNo}">Edit</a>
+				<a href="#" th:href="@{/room/delete/} + ${room.roomNo}">delete</a>
+				<a href="#" th:href="@{/room/booking/} + ${room.roomNo}">View Bookings</a>
+				
+				
+
+			</tr>
+		</table>
+	<h3><a href="#" th:href="@{/newBooking}">Add Booking</a></h3>
+		
+
+
+	</main>
+
+
+
+</body>
+</html>

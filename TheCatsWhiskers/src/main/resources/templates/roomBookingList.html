@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Paul's playground</title>
+
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+	
+	</nav>
+
+	<main role="main" class="container">
+
+
+		<h1>Bookings</h1>
+		<a href="/rooms">Back to rooms</a>
+		<table class="table table-striped">
+			<tr>
+				<th>Check In Date</th>
+				<th>Check out Date</th>
+				<th>Customer</th>
+				<th>Actions</th>
+			</tr>
+			<tr th:each="booking : ${bookings}">
+				<td th:text="${booking.checkInDate}"></td>
+				<td th:text="${booking.checkOutDate}"></td>
+				
+				
+
+				<td><a href="#" th:href="@{/cat/update/} + ${booking.bookingNo}">Edit</a>
+					<a href="#" th:href="@{/owner/cat/delete/} + ${booking.bookingNo}" >remove
+						cat from owner</a></td>
+
+			</tr>
+		</table>
+		<a href="/rooms">Back to Rooms</a>
+		
+
+
+	</main>
+
+
+
+</body>
+</html>

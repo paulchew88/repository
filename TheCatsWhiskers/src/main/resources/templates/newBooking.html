@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Form Submission</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+	</nav>
+	<h1>Booking Form</h1>
+	<div class="form-container" align="left">
+		<form action="#" th:action="@{/newBooking}" th:object="${booking}"
+			method="post" align="right">
+			<p>
+				Check in Date: <input type="date" th:field="*{checkInDate}" />
+			</p>
+			<p>
+				check out date: <input type="date" th:field="*{checkOutDate}" />
+			</p>
+			
+			
+			<p>
+				owner: <input type="text" th:field="${owner.email}" />
+			</p>
+			
+			<p>
+				Room: <input type="text" th:field="*{room}" />
+			</p>
+					
+
+			<p>
+				<input type="submit" value="Submit" /> <input type="reset"
+					value="Reset" />
+			</p>
+		</form>
+	</div>
+</body>
+</html>

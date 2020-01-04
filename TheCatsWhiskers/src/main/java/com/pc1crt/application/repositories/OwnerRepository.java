@@ -10,5 +10,6 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 	
 	public Owner findByCatsChipNo(Integer id);
 	
+	
 
 }

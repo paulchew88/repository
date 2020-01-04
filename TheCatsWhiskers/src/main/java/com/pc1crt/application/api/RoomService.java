@@ -80,7 +80,7 @@ public class RoomService {
 
 	}
 	
-	@GetMapping("/api/room/booking/{id}")
+	/*@GetMapping("/api/room/booking/{id}")
 	public List<Booking> getBookings(@PathVariable Integer id){
 		List<Booking> bookings = new ArrayList<Booking>();
 		Optional<Room> optionalRoom = roomRepository.findById(id);
@@ -99,6 +99,6 @@ public class RoomService {
 		room.setBooking(bookings);
 
 		return roomRepository.save(room);
-	}
+	}*/
 }
 
