@@ -1,14 +1,18 @@
 package com.pc1crt.application.controller;
 
+import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +41,7 @@ public class CatController {
 
 		catRepository.save(cat);
 
-		return "redirect:/owners";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/newCat", method = RequestMethod.GET)
@@ -48,9 +52,9 @@ public class CatController {
 	}
 	@RequestMapping("/cat/update/{id}")
 	public String updateCat(@PathVariable Integer id, Model model) {
-		Optional<Cat> optionalCat = catRepository.findById(id);
-		Cat cat = optionalCat.get();
+		Cat cat = catRepository.findByChipNo(id);
 		model.addAttribute(cat);
 		return "newCat";
 	}
+	
 }

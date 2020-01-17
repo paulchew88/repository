@@ -1,12 +1,15 @@
 package com.pc1crt.application.model;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 
 @Embeddable
 public class Address {
-
+	@NotBlank(message = "Street Name is mandatory")
 	private String StreetName;
+	@NotBlank(message = "House Number / Name is mandatory")
 	private String houseNumber;
+	@NotBlank(message = "PostCode is mandatory")
 	private String postCode;
 
 	public Address() {

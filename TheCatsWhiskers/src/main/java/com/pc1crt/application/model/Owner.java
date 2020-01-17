@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -24,17 +25,24 @@ public class Owner {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "customer_number")
+	
 	private Integer customerNumber;
+	@NotBlank(message = "First Name is mandatory")
 	private String firstName;
+	@NotBlank(message = "SurName is mandatory")
 	private String surName;
 	@NotNull
 	@Column(name = "email", unique = true)
+	@NotBlank(message = "Email is mandatory")
 	private String email;
 	@Embedded
+	
 	private Address address;
+	@NotBlank(message = "Number is mandatory")
 	private String contactNumber;
 	@Embedded
 	@ElementCollection
+	@OneToMany
 	private List<Cat> cats;
 
 	public Owner() {

@@ -13,14 +13,7 @@
 	<body>
 
 	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="home">Paulchew</a>
-		 <table align ="right">
-            <tr>
-                <td><a href="login">Login</a></td>
-				<td><a href="newCustomer">Register Customer</a></td>
-				<td><a href="newCat">Register Cat</a></td>
-            </tr>
-        </table>
+		<a class="navbar-brand" href="/">Home</a>
 	</nav>
         <div th:if="${param.error}">Invalid username and password.</div>
 	<div th:if="${param.logout}">You have been logged out.</div>

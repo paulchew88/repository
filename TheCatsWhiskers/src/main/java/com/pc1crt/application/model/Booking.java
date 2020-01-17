@@ -114,4 +114,23 @@ public class Booking {
 		this.room = room;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Booking [bookingNo=");
+		builder.append(bookingNo);
+		builder.append(", checkInDate=");
+		builder.append(checkInDate);
+		builder.append(", checkOutDate=");
+		builder.append(checkOutDate);
+		builder.append(", owner=");
+		builder.append(owner);
+		builder.append(", cats=");
+		builder.append(cats);
+		builder.append(", room=");
+		builder.append(room);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

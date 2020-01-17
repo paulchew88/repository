@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -34,23 +35,45 @@ public class OwnerController {
 	public String main(Model model) {
 		model.addAttribute("owners", ownerRepository.findAll());
 
-		return "customerList";
+		return "Lists/ownerList";
 	}
 
-	@RequestMapping(value = "/newCustomer", method = RequestMethod.GET)
+	@GetMapping("/newCustomer")
 	public String customerForm(Model model) {
 		model.addAttribute("owner", new Owner());
 
-		return "newCustomer";
+		return "NewForms/newOwner";
 	}
 
-	@RequestMapping(value = "/newCustomer", method = RequestMethod.POST)
+	@PostMapping("/newOwner")
 	public String submitOwner(@Valid @ModelAttribute("owner") Owner owner, BindingResult result, ModelMap model) {
+
+		if (result.hasErrors()) {
+			return "NewForms/newOwner";
+		}
 
 		ownerRepository.save(owner);
 
 		return "redirect:/owners";
+	}
 
+	@GetMapping("/owner/update/{id}")
+	public String getOwnerUpdateForm(@PathVariable Integer id, Model model) {
+		Owner owner = ownerRepository.findByCustomerNumber(id);
+		model.addAttribute(owner);
+		return "UpdateForms/updateOwner";
+	}
+
+	@PostMapping("/owner/update/{id}")
+	public String updateOwner(@PathVariable Integer id, @Valid Owner owner, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			owner.setCustomerNumber(id);
+			return "UpdateForms/updateOwner";
+		}
+
+		ownerRepository.save(owner);
+
+		return "redirect:/owners";
 	}
 
 	@RequestMapping("/owner/delete/{id}")
@@ -59,32 +82,22 @@ public class OwnerController {
 		return "redirect:/owners";
 	}
 
-	@RequestMapping("/owner/cat/{id}")
+	@GetMapping("/owner/cat/{id}")
 	public String showCats(@PathVariable Integer id, Model model) {
-		Optional<Owner> optionalOwner = ownerRepository.findById(id);
-		Owner owner = optionalOwner.get();
+
+		Owner owner = ownerRepository.findByCustomerNumber(id);
 		model.addAttribute("cats", owner.getCats());
-
-		return "ownerCatList";
-	}
-
-	@RequestMapping("/owner/update/{id}")
-	public String updateOwner(@PathVariable Integer id, Model model) {
-		Optional<Owner> optionalOwner = ownerRepository.findById(id);
-		Owner owner = optionalOwner.get();
-		model.addAttribute(owner);
-		return "newCustomer";
+		System.out.println(owner.getCats());
+		return "Lists/ownerCatList";
 	}
 
 	@GetMapping("/owner/cat/add/{id}")
 	public String main(@PathVariable Integer id, Model model) {
-		Optional<Owner> optionalOwner = ownerRepository.findById(id);
-		Owner owner = optionalOwner.get();
-
-		model.addAttribute(new Cat());
+		Owner owner = ownerRepository.findByCustomerNumber(id);
 		model.addAttribute(owner);
-
-		return "ownerAddCat";
+		model.addAttribute(new Cat());
+		System.out.println(owner);
+		return "NewForms/ownerAddCat";
 	}
 
 	@RequestMapping(value = "/addCat", method = RequestMethod.POST)
@@ -116,13 +129,11 @@ public class OwnerController {
 
 		List<Cat> cats = owner.getCats();
 		int found = 0;
-		Cat newCat = new Cat();
 		for (int i = 0; i < cats.size(); i++) {
 			if (cats.get(i).getChipNo() == cat.getChipNo()) {
 				found = i;
 			}
 		}
-
 		cats.remove(found);
 		owner.setCats(cats);
 		ownerRepository.save(owner);

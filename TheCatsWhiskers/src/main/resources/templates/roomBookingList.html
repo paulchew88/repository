@@ -17,7 +17,7 @@
 
 	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
 		<a class="navbar-brand" href="/">Home</a>
-	
+
 	</nav>
 
 	<main role="main" class="container">
@@ -30,22 +30,27 @@
 				<th>Check In Date</th>
 				<th>Check out Date</th>
 				<th>Customer</th>
+				<th>Customer E-Mail</th>
 				<th>Actions</th>
 			</tr>
 			<tr th:each="booking : ${bookings}">
 				<td th:text="${booking.checkInDate}"></td>
 				<td th:text="${booking.checkOutDate}"></td>
-				
-				
+				<td
+					th:text="${booking.owner.firstName}+ ' ' + ${booking.owner.surName}"></td>
 
-				<td><a href="#" th:href="@{/cat/update/} + ${booking.bookingNo}">Edit</a>
-					<a href="#" th:href="@{/owner/cat/delete/} + ${booking.bookingNo}" >remove
-						cat from owner</a></td>
+				<td th:text="${booking.owner.email}"></td>
+
+
+				<td><a href="#"
+					th:href="@{/booking/update/} + ${booking.bookingNo}">Edit</a> <a
+					href="#" th:href="@{/room/booking/delete/} + ${booking.bookingNo}">Delete
+						Booking </a></td>
 
 			</tr>
 		</table>
 		<a href="/rooms">Back to Rooms</a>
-		
+
 
 
 	</main>

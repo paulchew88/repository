@@ -13,7 +13,7 @@ import com.pc1crt.application.model.BookingKey;
 public interface BookingRepository extends JpaRepository<Booking, Integer>{
 
 	public List<Booking> findByRoomRoomNo(Integer id);
-	
+	public Booking findByBookingNo(Integer id);
 
 
 }

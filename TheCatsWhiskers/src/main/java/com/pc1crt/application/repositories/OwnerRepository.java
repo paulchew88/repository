@@ -9,7 +9,7 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 	public Owner findByEmailContaining(String text);
 	
 	public Owner findByCatsChipNo(Integer id);
-	
+	public Owner findByCustomerNumber(Integer id);
 	
 
 }
