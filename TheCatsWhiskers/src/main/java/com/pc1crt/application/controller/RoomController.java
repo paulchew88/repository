@@ -38,7 +38,7 @@ public class RoomController {
 	public String RoomForm(Model model) {
 		model.addAttribute("room", new Room());
 
-		return "newRoom";
+		return "/NewForms/newRoom";
 	}
 
 	@RequestMapping(value = "/newRoom", method = RequestMethod.POST)

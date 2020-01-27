@@ -1,11 +1,17 @@
 package com.pc1crt.application.model;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,6 +23,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.boot.model.relational.Namespace.Name;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -24,29 +31,50 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "cat")
 public class Cat {
 	private String name;
+
 	@Id
+	/*
+	 * @GeneratedValue
+	 * 
+	 * private Integer catId;
+	 */
+
 	@NotNull
 	@Column(name = "chip_no")
 	private Integer chipNo;
+	
+	@ManyToMany(cascade = CascadeType.ALL,mappedBy = "cats")
+	private Set<Booking> bookings;
+
 	private MealPlan food;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate vaccinatedDate;
 	private String temperment;
 	private String litterType;
 	private String otherInformation;
+
+
 	public Cat() {
 	}
 
-	public Cat(String name, @NotNull Integer chipNo, MealPlan food, LocalDate vaccinatedDate, String temperment,
-			String litterType, String otherInformation) {
+	public Cat(String name, @NotNull Integer chipNo, Set<Booking> bookings, MealPlan food, LocalDate vaccinatedDate,
+			String temperment, String litterType, String otherInformation) {
 		this.name = name;
 		this.chipNo = chipNo;
+		this.bookings = bookings;
 		this.food = food;
 		this.vaccinatedDate = vaccinatedDate;
 		this.temperment = temperment;
 		this.litterType = litterType;
 		this.otherInformation = otherInformation;
-		
+	}
+
+	public Set<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	public String getName() {
@@ -105,6 +133,16 @@ public class Cat {
 		this.otherInformation = otherInformation;
 	}
 
+	public void addBooking(Booking booking) {
+		this.bookings.add(booking);
+		booking.getCats().add(this);
+	}
+
+	public void removeBooking(Booking booking) {
+		this.bookings.remove(booking);
+		booking.getCats().remove(this);
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -125,7 +163,5 @@ public class Cat {
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 
 }

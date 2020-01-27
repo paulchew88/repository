@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -32,6 +34,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Embeddable
 public class Booking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,11 +47,9 @@ public class Booking {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_number")
 	private Owner owner;
-	@Embedded
-	@ElementCollection
-	@OneToMany
-	private List<Cat> cats;
-	@Embedded
+
+	@ManyToMany
+	private Set<Cat> cats;
 	@ManyToOne
 	@JoinColumn(name = "room")
 	private Room room;
@@ -56,7 +57,7 @@ public class Booking {
 	public Booking() {
 	}
 
-	public Booking(Integer bookingNo, LocalDate checkInDate, LocalDate checkOutDate, Owner owner, List<Cat> cats,
+	public Booking(Integer bookingNo, LocalDate checkInDate, LocalDate checkOutDate, Owner owner, Set<Cat> cats,
 			Room room) {
 		this.bookingNo = bookingNo;
 		this.checkInDate = checkInDate;
@@ -98,11 +99,11 @@ public class Booking {
 		this.owner = owner;
 	}
 
-	public List<Cat> getCats() {
+	public Set<Cat> getCats() {
 		return cats;
 	}
 
-	public void setCats(List<Cat> cats) {
+	public void setCats(Set<Cat> cats) {
 		this.cats = cats;
 	}
 
@@ -114,6 +115,14 @@ public class Booking {
 		this.room = room;
 	}
 
+	public void addCat(Cat cat) {
+		this.cats.add(cat);
+		cat.getBookings().add(this);
+	}
+	public void removeCat(Cat cat) {
+		this.cats.remove(cat);
+		cat.getBookings().remove(this);
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

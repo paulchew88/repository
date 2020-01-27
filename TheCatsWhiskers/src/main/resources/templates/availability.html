@@ -20,39 +20,25 @@
 
 	</nav>
 
-	<main role="main" class="container">
+	<main role="main" class="container" align="left">
 
 
-		<h1>Rooms</h1>
-		<h3>
-			<a href="/newRoom">Add Room</a>
-		</h3>
-		<h3>
-			<a href="/availability">availability</a>
-
-		</h3>
-		<h3>
-			<a href="#" th:href="@{/newBooking}">Add Booking</a>
-		</h3>
+		<h1>Bookings</h1>
+		<a href="/rooms">Back to rooms</a>
 		<table class="table table-striped">
 			<tr>
 				<th>Room Number</th>
-				<th>Room Type</th>
-
-				<th>Actions</th>
+				<th>availability</th>
+				
 			</tr>
 			<tr th:each="room : ${rooms}">
 				<td th:text="${room.roomNo}"></td>
-				<td th:text="${room.roomType}"></td>
+				<td th:text="${room.available} ?'Available': 'Booked'"></td>
+				
 
-
-				<td><a href="#" th:href="@{/room/update/} + ${room.roomNo}">Edit</a>
-					<a href="#" th:href="@{/room/delete/} + ${room.roomNo}">delete</a>
-					<a href="#" th:href="@{/room/booking/} + ${room.roomNo}">View
-						Bookings</a>
 			</tr>
 		</table>
-
+		<a href="/rooms">Back to Rooms</a>
 
 
 

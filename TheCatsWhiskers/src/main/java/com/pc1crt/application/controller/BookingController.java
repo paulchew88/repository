@@ -3,6 +3,7 @@ package com.pc1crt.application.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -44,42 +45,55 @@ public class BookingController {
 	@RequestMapping(value = "/newBooking", method = RequestMethod.POST)
 	public String submit(@Valid @ModelAttribute("booking") Booking booking, @ModelAttribute("owner") Owner owner,
 			BindingResult result, ModelMap model) {
-		System.out.println(booking);
+		
 		Owner newOwner = ownerRepository.findByEmailContaining(owner.getEmail());
 		System.out.println(newOwner);
 		booking.setOwner(newOwner);
-		System.out.println(booking);
+		
 		bookingRepository.save(booking);
+		model.addAttribute(booking);
+		System.out.println(booking);
+		model.addAttribute("cats", booking.getOwner().getCats());
 
-		return "redirect:/rooms";
+		return "bookingAddCat";
 	}
 
 	@RequestMapping("/booking/update/{id}")
 	public String updateCat(@PathVariable Integer id, Model model) {
-		
+
 		Booking booking = bookingRepository.findByBookingNo(id);
 		model.addAttribute(booking);
 		model.addAttribute("cats", booking.getOwner().getCats());
-		
+
 		System.out.println(booking);
 		return "bookingAddCat";
 	}
+
 	@PostMapping("/addCats/{id}")
-	public String addCats(@PathVariable("id") Integer id,@Valid Booking booking, @ModelAttribute("cat") Cat cat,
-			 @RequestParam(value = "cats" , required = false) List<Cat> cats ,
-	         BindingResult bindingResult , Model model) {
-		Booking newBooking =bookingRepository.findByBookingNo(id);
-		newBooking.setCats(cats);
+	public String addCats(@PathVariable("id") Integer id, @Valid Booking booking, @ModelAttribute("cat") Cat cat,
+			@RequestParam(value = "cats", required = false) Set<Cat> cats, BindingResult bindingResult, Model model) {
+		Booking newBooking = bookingRepository.findByBookingNo(id);
+		System.out.println(newBooking);
+		if (!cats.isEmpty()) {
+			newBooking.getCats().clear();
+			for (Cat newCat : cats) {
+				
+				newBooking.addCat(newCat);
+			}
+		
 		bookingRepository.save(newBooking);
 		System.out.println(newBooking);
-		
+		}
+		else {
+		 newBooking.getCats().clear();
+		}
+
 		return "redirect:/rooms";
 	}
 
 	@GetMapping("/room/booking/{id}")
 	public String getBookings(@PathVariable Integer id, Model model) {
-		List<Booking> bookings = new ArrayList<Booking>();
-		bookings = bookingRepository.findByRoomRoomNo(id);
+		Set<Booking> bookings = bookingRepository.findByRoomRoomNo(id);
 		// list of bookings for room 1
 		model.addAttribute("bookings", bookings);
 		return "/roomBookingList";

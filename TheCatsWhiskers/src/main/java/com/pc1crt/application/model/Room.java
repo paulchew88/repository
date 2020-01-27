@@ -18,6 +18,7 @@ public class Room {
 	@Column(name = "room_no")
 	private Integer roomNo;
 	private RoomType roomType;
+	private boolean available;
 
 	public Room() {
 	}
@@ -36,6 +37,14 @@ public class Room {
 
 	public void setRoomType(RoomType roomType) {
 		this.roomType = roomType;
+	}
+
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 }

@@ -96,7 +96,6 @@ public class OwnerController {
 		Owner owner = ownerRepository.findByCustomerNumber(id);
 		model.addAttribute(owner);
 		model.addAttribute(new Cat());
-		System.out.println(owner);
 		return "NewForms/ownerAddCat";
 	}
 
@@ -111,8 +110,7 @@ public class OwnerController {
 			catRepository.save(cat);
 		}
 
-		System.out.println(cat);
-		System.out.println(owner);
+
 		cats.add(cat);
 		owner.setCats(cats);
 
@@ -122,20 +120,11 @@ public class OwnerController {
 	}
 
 	@RequestMapping("owner/cat/delete/{id}")
-	public String removeCat(@PathVariable Integer id, @ModelAttribute("cat") Cat cat, BindingResult result,
-			ModelMap model) {
+	public String removeCat(@PathVariable Integer id) {
 
 		Owner owner = ownerRepository.findByCatsChipNo(id);
+		owner.removeCat(catRepository.findByChipNo(id));
 
-		List<Cat> cats = owner.getCats();
-		int found = 0;
-		for (int i = 0; i < cats.size(); i++) {
-			if (cats.get(i).getChipNo() == cat.getChipNo()) {
-				found = i;
-			}
-		}
-		cats.remove(found);
-		owner.setCats(cats);
 		ownerRepository.save(owner);
 		return "redirect:/owners";
 	}

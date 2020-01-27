@@ -40,9 +40,8 @@ public class Owner {
 	private Address address;
 	@NotBlank(message = "Number is mandatory")
 	private String contactNumber;
-	@Embedded
-	@ElementCollection
-	@OneToMany
+	
+	@OneToMany(orphanRemoval = true)
 	private List<Cat> cats;
 
 	public Owner() {
@@ -102,6 +101,12 @@ public class Owner {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	public void addCat(Cat cat) {
+		this.cats.add(cat);
+	}
+	public void removeCat(Cat cat) {
+		getCats().remove(cat);
 	}
 
 	@Override
