@@ -29,7 +29,10 @@
 
 
 		<h1>Customers</h1>
+		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}">
+		</div>
 		<a href="/newCustomer"> Add New Customer </a>
+		
 		<table class="table table-striped">
 			<tr>
 				<th>First Name</th>

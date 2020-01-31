@@ -27,6 +27,8 @@
 	</nav>
 <body>
 	<h2>Welcome to the cats whiskers hotel.</h2>
+	<div class="alert alert-danger" th:if="${error != null}"
+		th:text="${error}"></div>
 	<h3>
 		<a href="/owners">List of Owners</a>
 	</h3>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.pc1crt.application.error.FormErrorExcepeion;
+import com.pc1crt.application.error.UnavailableException;
 import com.pc1crt.application.model.Booking;
 import com.pc1crt.application.model.Cat;
 import com.pc1crt.application.model.Owner;
+import com.pc1crt.application.model.RoomType;
 import com.pc1crt.application.repositories.*;
 
 @Controller
@@ -44,18 +49,25 @@ public class BookingController {
 
 	@RequestMapping(value = "/newBooking", method = RequestMethod.POST)
 	public String submit(@Valid @ModelAttribute("booking") Booking booking, @ModelAttribute("owner") Owner owner,
-			BindingResult result, ModelMap model) {
-		
-		Owner newOwner = ownerRepository.findByEmailContaining(owner.getEmail());
-		System.out.println(newOwner);
-		booking.setOwner(newOwner);
-		
-		bookingRepository.save(booking);
-		model.addAttribute(booking);
-		System.out.println(booking);
-		model.addAttribute("cats", booking.getOwner().getCats());
+			BindingResult result, ModelMap model) throws Exception {
 
-		return "bookingAddCat";
+		Owner newOwner = ownerRepository.findByEmailContaining(owner.getEmail());
+		// Set<Booking> bookings = booking.getRoom().getBookings();
+		System.out.println(newOwner);
+
+		booking.setOwner(newOwner);
+
+		if (booking.getRoom().findBooking(booking.getCheckInDate(), booking.getCheckOutDate()) == null) {
+			bookingRepository.save(booking);
+			model.addAttribute(booking);
+			System.out.println(booking);
+			model.addAttribute("cats", booking.getOwner().getCats());
+
+			return "bookingAddCat";
+		} else {
+
+			throw new UnavailableException("date is already booked");
+		}
 	}
 
 	@RequestMapping("/booking/update/{id}")
@@ -74,21 +86,29 @@ public class BookingController {
 			@RequestParam(value = "cats", required = false) Set<Cat> cats, BindingResult bindingResult, Model model) {
 		Booking newBooking = bookingRepository.findByBookingNo(id);
 		System.out.println(newBooking);
-		if (!cats.isEmpty()) {
-			newBooking.getCats().clear();
-			for (Cat newCat : cats) {
-				
-				newBooking.addCat(newCat);
+		if ((cats.size() < 2 && newBooking.getRoom().getRoomType().compareTo(RoomType.Standard_Room) == 0)
+				|| (cats.size() < 4 && newBooking.getRoom().getRoomType().compareTo(RoomType.Family_Room) == 0)) {
+
+			if (!cats.isEmpty()) {
+				newBooking.getCats().clear();
+				for (Cat newCat : cats) {
+
+					newBooking.addCat(newCat);
+				}
+
+				bookingRepository.save(newBooking);
+				System.out.println(newBooking);
+			} else {
+				newBooking.getCats().clear();
 			}
-		
-		bookingRepository.save(newBooking);
-		System.out.println(newBooking);
-		}
-		else {
-		 newBooking.getCats().clear();
+			return "redirect:/rooms";
+		} else {
+			newBooking.setOwner(null);
+			bookingRepository.deleteById(newBooking.getBookingNo());
+			throw new FormErrorExcepeion(
+					"too many cats for this type of room, this booking has been removed please recreate it and add the correct amount of cats");
 		}
 
-		return "redirect:/rooms";
 	}
 
 	@GetMapping("/room/booking/{id}")
@@ -113,4 +133,21 @@ public class BookingController {
 		bookingRepository.deleteById(id);
 		return "redirect:/rooms";
 	}
+
+	@ExceptionHandler({ UnavailableException.class })
+	public String getUnavailable(UnavailableException ex, Model model) {
+		model.addAttribute("booking", new Booking());
+		model.addAttribute(new Owner());
+		model.addAttribute("error", ex.getMessage());
+
+		return "NewForms/newBooking";
+	}
+
+	@ExceptionHandler({ FormErrorExcepeion.class })
+	public String getFormError(FormErrorExcepeion ex, Model model) {
+		model.addAttribute("error", ex.getMessage());
+
+		return "start";
+	}
+
 }

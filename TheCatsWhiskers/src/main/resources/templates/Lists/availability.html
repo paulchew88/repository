@@ -28,13 +28,21 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Room Number</th>
-				<th>availability</th>
-				
+				<th>Availability</th>
+				<th>Actions</th>
+
 			</tr>
 			<tr th:each="room : ${rooms}">
 				<td th:text="${room.roomNo}"></td>
 				<td th:text="${room.available} ?'Available': 'Booked'"></td>
-				
+				<td><span th:if="${room.available == false}"><a href="#"
+						th:href="@{/room/cats/} + ${room.roomNo}">Show cats</a></span> <span
+					th:if="${room.available == true}">no cats to show</span></td>
+
+
+
+
+
 
 			</tr>
 		</table>

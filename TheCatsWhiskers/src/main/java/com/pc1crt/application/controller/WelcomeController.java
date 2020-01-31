@@ -52,6 +52,24 @@ public class WelcomeController {
 
 	@GetMapping("/availability")
 	public String availability(Model model) {
+		
+		List<Room> rooms = roomRepository.findAll();
+		
+		for (Room room : rooms) {
+			if (room.findBooking(LocalDate.now(), LocalDate.now()) == null) {
+				room.setAvailable(true);
+			} else {
+				room.setAvailable(false);
+			}
+		}
+
+		model.addAttribute("rooms", rooms);
+
+		return "Lists/availability";
+
+	}
+	@GetMapping("/availabilitys")
+	public String availabilitys(Model model) {
 		System.out.println(LocalDate.now());
 		Set<Booking> bookings = bookingRepository.findByCheckInDateBeforeAndCheckOutDateAfter(LocalDate.now(),
 				LocalDate.now());
@@ -67,7 +85,43 @@ public class WelcomeController {
 		}
 		
 		model.addAttribute("rooms", rooms);
-		return "availability";
+		return "Lists/availability";
+
+	}
+
+	//tried to show 2 separate Lists but could not persist a list within a list object
+	
+	/*@GetMapping("/room/availability")
+	public String roomAvailability(Model model) {
+		Set<Booking> bookings = bookingRepository.findByCheckInDateBeforeAndCheckOutDateAfter(LocalDate.now(),
+				LocalDate.now());
+		List<Room> rooms = roomRepository.findAll();
+		List<Room> tempRoom = new ArrayList<Room>();
+		System.out.println(rooms);
+		for (Booking b : bookings) {
+			if (!bookings.isEmpty()) {
+				for (Room r : rooms) {
+					System.out.println(r);
+					if(b.getRoom().getRoomNo() != r.getRoomNo()) {
+						Room room = r;
+						tempRoom.add(room);
+					}
+				}
+			}
+
+		}
+	model.addAttribute("bookings", bookings);
+	model.addAttribute("rooms", tempRoom);
+
+		return "/Lists/roomAvailability";
+	}*/
+
+	@GetMapping("/room/cats/{id}")
+	public String showCats(@PathVariable Integer id, Model model) {
+		Room room = roomRepository.findByRoomNo(id);
+		Booking booking = room.findBooking(LocalDate.now(), LocalDate.now());
+		model.addAttribute("cats", booking.getCats());
+		return "/Lists/bookingViewCats";
 
 	}
 }

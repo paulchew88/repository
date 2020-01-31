@@ -11,11 +11,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.pc1crt.application.model.Booking;
 import com.pc1crt.application.model.BookingKey;
 
-public interface BookingRepository extends JpaRepository<Booking, Integer>{
+public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
 	public Set<Booking> findByRoomRoomNo(Integer id);
+
 	public Booking findByBookingNo(Integer id);
-	// find where start date is after today and check out is after
-	public Set<Booking> findByCheckInDateBeforeAndCheckOutDateAfter(LocalDate date1, LocalDate date2);
+
+	public Set<Booking> findByCheckInDateBeforeAndCheckOutDateAfter(LocalDate now, LocalDate now2);
+
+
 
 }

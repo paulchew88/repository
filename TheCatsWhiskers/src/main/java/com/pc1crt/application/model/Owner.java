@@ -15,8 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Embeddable
@@ -34,14 +38,15 @@ public class Owner {
 	@NotNull
 	@Column(name = "email", unique = true)
 	@NotBlank(message = "Email is mandatory")
+	@Email(message = "Must be a valid email")
 	private String email;
 	@Embedded
-	
-	private Address address;
+	private Address address = new Address();
 	@NotBlank(message = "Number is mandatory")
+	@Pattern(regexp="[\\d]{11}", message = "must be a valid phone number including area code")
 	private String contactNumber;
 	
-	@OneToMany(orphanRemoval = true)
+	@OneToMany()
 	private List<Cat> cats;
 
 	public Owner() {

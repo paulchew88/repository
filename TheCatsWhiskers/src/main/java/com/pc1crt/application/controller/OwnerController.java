@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.pc1crt.application.error.FormErrorExcepeion;
+import com.pc1crt.application.error.UnavailableException;
+import com.pc1crt.application.model.Booking;
 import com.pc1crt.application.model.Cat;
 import com.pc1crt.application.model.Owner;
 import com.pc1crt.application.repositories.CatRepository;
@@ -51,10 +55,12 @@ public class OwnerController {
 		if (result.hasErrors()) {
 			return "NewForms/newOwner";
 		}
-
+		if(ownerRepository.findByEmailContaining(owner.getEmail()) == null) {
 		ownerRepository.save(owner);
 
 		return "redirect:/owners";
+		}
+		throw new UnavailableException("Email already registered");
 	}
 
 	@GetMapping("/owner/update/{id}")
@@ -78,8 +84,13 @@ public class OwnerController {
 
 	@RequestMapping("/owner/delete/{id}")
 	public String delete(@PathVariable Integer id) {
+		try {
 		ownerRepository.deleteById(id);
-		return "redirect:/owners";
+		}catch (Exception e) {
+			 throw new FormErrorExcepeion("oops unable to delete owner. ensure owner has no outstanding bookings");
+			}
+			return "redirect:/owners";
+		
 	}
 
 	@GetMapping("/owner/cat/{id}")
@@ -126,6 +137,23 @@ public class OwnerController {
 		owner.removeCat(catRepository.findByChipNo(id));
 
 		ownerRepository.save(owner);
+	
 		return "redirect:/owners";
+	}
+	@ExceptionHandler({ UnavailableException.class })
+	public String getUnavailable(UnavailableException ex, Model model) {
+		model.addAttribute("error", ex.getMessage());
+		model.addAttribute("owner", new Owner());
+
+		return "NewForms/newOwner";
+		
+	}
+	@ExceptionHandler({ FormErrorExcepeion.class })
+	public String getFormError(FormErrorExcepeion ex, Model model) {
+		model.addAttribute("error", ex.getMessage());
+		
+
+		return "start";
+		
 	}
 }

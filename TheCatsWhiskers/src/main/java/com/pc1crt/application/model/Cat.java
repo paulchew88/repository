@@ -143,25 +143,8 @@ public class Cat {
 		booking.getCats().remove(this);
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Cat [name=");
-		builder.append(name);
-		builder.append(", chipNo=");
-		builder.append(chipNo);
-		builder.append(", food=");
-		builder.append(food);
-		builder.append(", vaccinatedDate=");
-		builder.append(vaccinatedDate);
-		builder.append(", temperment=");
-		builder.append(temperment);
-		builder.append(", litterType=");
-		builder.append(litterType);
-		builder.append(", otherInformation=");
-		builder.append(otherInformation);
-		builder.append("]");
-		return builder.toString();
-	}
+
+
+
 
 }
