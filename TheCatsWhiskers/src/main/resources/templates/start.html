@@ -17,25 +17,14 @@
 
 
 	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="home">Paulchew</a>
+		<a class="navbar-brand" href="/home">Home</a>
 		<table>
 			<tr>
-				<td><a href="logout">Logout</a></td>
+				<td><a href="/logout">Logout</a></td>
 			
 			</tr>
 		</table>
 	</nav>
-	  <p>This is User Profile\Index. Only authenticated people can see this</p>
-    <table>
-        <tr>
-            <td>Username</td>
-            <td><span sec:authentication="name"></span></td>
-        </tr>
-        <tr>
-            <td>Authorities</td>
-            <td><span sec:authentication="principal.authorities"></span></td>
-        </tr>
-    </table>
 <body>
 	<h2>Welcome to the cats whiskers hotel.</h2>
 	<div class="alert alert-danger" th:if="${error != null}"

@@ -34,7 +34,7 @@ public class RoomController {
 	RoomRepository roomRepository;
 	@Autowired
 	BookingRepository bookingRepository;
-	@GetMapping("/rooms")
+	@GetMapping("/staff/rooms")
 	public String main(Model model) {
 		model.addAttribute("rooms", roomRepository.findAll());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

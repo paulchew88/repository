@@ -10,16 +10,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="/">Home</a>
-	</nav>
-	<h1>Add Cats to Booking</h1>
-	<div class="alert alert-danger" th:if="${error != null}" th:text="${error}">
-		</div>
+		<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/home">Home</a>
+		<table>
+			<tr>
+				<td><a href="/logout">Logout</a></td>
+			
+			</tr>
+		</table>
+	</nav>	<h1>Add Cats to Booking</h1>
+	<div class="alert alert-danger" th:if="${error != null}"
+		th:text="${error}"></div>
 	<div class="form-container" align="left">
-		<form action="#" th:action="@{/staff/addCats/{id}(id=${booking.bookingNo})}" th:object="${booking}"
-			method="post" align="left">
-			<input type="hidden" th:field="*{bookingNo}" id="bookingNo" placeholder="bookingNo"/>
+		<form action="#"
+			th:action="@{/staff/addCats/{id}(id=${booking.bookingNo})}"
+			th:object="${booking}" method="post" align="left">
+			<input type="hidden" th:field="*{bookingNo}" id="bookingNo"
+				placeholder="bookingNo" />
 			<h3>Which Cats are staying in this booking?</h3>
 			<table class="table table-striped">
 				<tr>
@@ -47,7 +54,9 @@
 					value="Reset" />
 			</p>
 		</form>
-		<h3><a  href="/rooms">Back to Rooms</a></h3>
+		<h3>
+			<a href="/rooms">Back to Rooms</a>
+		</h3>
 	</div>
 </body>
 </html>

@@ -64,7 +64,7 @@ public class WelcomeController {
 
 	}
 
-	@GetMapping("/")
+	@GetMapping("/home")
 	public String main(Model model) {
 
 		return "start"; // view

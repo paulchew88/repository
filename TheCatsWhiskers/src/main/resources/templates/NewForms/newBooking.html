@@ -9,8 +9,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="/">Home</a>
+		<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/home">Home</a>
+		<table>
+			<tr>
+				<td><a href="/logout">Logout</a></td>
+			
+			</tr>
+		</table>
 	</nav>
 	<h1>Booking Form</h1>
 	<div class="alert alert-danger" th:if="${error != null}" th:text="${error}">

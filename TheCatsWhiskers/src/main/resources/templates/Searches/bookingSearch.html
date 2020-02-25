@@ -9,12 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="/">Home</a>
-		<table align="right">
+		<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/home">Home</a>
+		<table>
 			<tr>
-				<td><a href="/login">Login</a></td>
-
+				<td><a href="/logout">Logout</a></td>
+			
 			</tr>
 		</table>
 	</nav>
@@ -26,7 +26,7 @@
 	<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
 	<div class="form-container" align="left">
-		<form th:object="${booking}" th:action="@{/search/booking}"
+		<form th:object="${booking}" th:action="@{/staff/search/booking}"
 			method="get">
 			Date from<input type="date" name="date1" id="date1" /> Date to<input
 				type="date" name="date2" id="date2" /> Room Number<input
