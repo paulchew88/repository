@@ -1,5 +1,6 @@
 package com.pc1crt.application.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pc1crt.application.error.FormErrorExcepeion;
 import com.pc1crt.application.error.UnavailableException;
@@ -34,15 +38,8 @@ public class OwnerController {
 	OwnerRepository ownerRepository;
 	@Autowired
 	CatRepository catRepository;
-
-	@GetMapping("/owners")
-	public String main(Model model) {
-		model.addAttribute("owners", ownerRepository.findAll());
-
-		return "Lists/ownerList";
-	}
-
-	@GetMapping("/newCustomer")
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	@GetMapping("/staff/newCustomer")
 	public String customerForm(Model model) {
 		model.addAttribute("owner", new Owner());
 
@@ -55,15 +52,15 @@ public class OwnerController {
 		if (result.hasErrors()) {
 			return "NewForms/newOwner";
 		}
-		if(ownerRepository.findByEmailContaining(owner.getEmail()) == null) {
-		ownerRepository.save(owner);
+		if (ownerRepository.findByEmailContaining(owner.getEmail()) == null) {
+			ownerRepository.save(owner);
 
-		return "redirect:/owners";
+			return "redirect:/staff/owners";
 		}
 		throw new UnavailableException("Email already registered");
 	}
 
-	@GetMapping("/owner/update/{id}")
+	@GetMapping("/staff/owner/update/{id}")
 	public String getOwnerUpdateForm(@PathVariable Integer id, Model model) {
 		Owner owner = ownerRepository.findByCustomerNumber(id);
 		model.addAttribute(owner);
@@ -82,18 +79,18 @@ public class OwnerController {
 		return "redirect:/owners";
 	}
 
-	@RequestMapping("/owner/delete/{id}")
+	@RequestMapping("/admin/owner/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		try {
-		ownerRepository.deleteById(id);
-		}catch (Exception e) {
-			 throw new FormErrorExcepeion("oops unable to delete owner. ensure owner has no outstanding bookings");
-			}
-			return "redirect:/owners";
-		
+			ownerRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new FormErrorExcepeion("oops unable to delete owner. ensure owner has no outstanding bookings");
+		}
+		return "redirect:/staff/owners";
+
 	}
 
-	@GetMapping("/owner/cat/{id}")
+	@GetMapping("/staff/owner/cat/{id}")
 	public String showCats(@PathVariable Integer id, Model model) {
 
 		Owner owner = ownerRepository.findByCustomerNumber(id);
@@ -102,7 +99,7 @@ public class OwnerController {
 		return "Lists/ownerCatList";
 	}
 
-	@GetMapping("/owner/cat/add/{id}")
+	@GetMapping("/staff/owner/cat/add/{id}")
 	public String main(@PathVariable Integer id, Model model) {
 		Owner owner = ownerRepository.findByCustomerNumber(id);
 		model.addAttribute(owner);
@@ -121,39 +118,63 @@ public class OwnerController {
 			catRepository.save(cat);
 		}
 
-
 		cats.add(cat);
 		owner.setCats(cats);
 
 		ownerRepository.save(owner);
 
-		return "redirect:/owners";
+		return "redirect:/staff/owners";
 	}
 
-	@RequestMapping("owner/cat/delete/{id}")
+	@RequestMapping("/admin/owner/cat/delete/{id}")
 	public String removeCat(@PathVariable Integer id) {
 
 		Owner owner = ownerRepository.findByCatsChipNo(id);
 		owner.removeCat(catRepository.findByChipNo(id));
 
 		ownerRepository.save(owner);
-	
-		return "redirect:/owners";
+
+		return "redirect:/staff/owners";
 	}
+
+	@GetMapping("/staff/owners")
+	public String search(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		model.addAttribute("name", auth.getName());
+		System.out.println(auth.getAuthorities());
+		model.addAttribute("search", ownerRepository.findAll());
+
+		return "/Searches/ownerSearch";
+	}
+
+	@RequestMapping(value = "/staff/search/owner", method = RequestMethod.GET)
+	public String showStudentBySurname(@RequestParam(value = "search", required = false) String search, Model model) {
+
+		List<Owner> ownersByEmail = ownerRepository.findByEmailContainingOrEmailEquals(search, search);
+		if (!ownersByEmail.isEmpty()) {
+			model.addAttribute("search", ownersByEmail);
+		} else {
+			throw new FormErrorExcepeion("No owners found");
+		}
+
+		return "/Searches/ownerSearch";
+	}
+
 	@ExceptionHandler({ UnavailableException.class })
 	public String getUnavailable(UnavailableException ex, Model model) {
 		model.addAttribute("error", ex.getMessage());
 		model.addAttribute("owner", new Owner());
 
 		return "NewForms/newOwner";
-		
+
 	}
+
 	@ExceptionHandler({ FormErrorExcepeion.class })
 	public String getFormError(FormErrorExcepeion ex, Model model) {
 		model.addAttribute("error", ex.getMessage());
-		
 
-		return "start";
-		
+		return "/Searches/ownerSearch";
+
 	}
 }

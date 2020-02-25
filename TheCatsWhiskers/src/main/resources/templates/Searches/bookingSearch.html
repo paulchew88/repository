@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Booking Search</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+		<table align="right">
+			<tr>
+				<td><a href="/login">Login</a></td>
+
+			</tr>
+		</table>
+	</nav>
+	<h1>Booking Search</h1>
+	<h3>
+		<a href="/staff/bookings">List All Bokings</a>
+	</h3>
+
+	<div class="alert alert-danger" th:if="${error != null}"
+		th:text="${error}"></div>
+	<div class="form-container" align="left">
+		<form th:object="${booking}" th:action="@{/search/booking}"
+			method="get">
+			Date from<input type="date" name="date1" id="date1" /> Date to<input
+				type="date" name="date2" id="date2" /> Room Number<input
+				type="text" name="roomNo" id="roomNo" /> <input type="submit"
+				value="Search" />
+			<div th:if="${not #lists.isEmpty(search)}">
+				
+				<div class="alert alert-danger" th:if="${error != null}"
+					th:text="${error}"></div>
+
+
+				<table class="table table-striped">
+					<tr>
+						<th>Owner Name</th>
+						<th>Room Number</th>
+						<th>Check In Date</th>
+						<th>Check out Date</th>
+						<th>Customer E-Mail</th>
+						<th>Address</th>
+						<th>Contact Number</th>
+						<th>Total Price</th>
+						<th>Cat Information</th>
+						<th>Actions</th>
+
+					</tr>
+					<tr th:each="booking : ${search}">
+						<td
+							th:text="${booking.owner.firstName} + ' ' + ${booking.owner.surName}"></td>
+						<td th:text="${booking.Room.roomNo}"></td>
+						<td th:text="${booking.checkInDate}"></td>
+						<td th:text="${booking.checkOutDate}"></td>
+						<td th:text="${booking.owner.email}"></td>
+						<td th:text="${booking.owner.address}"></td>
+						<td th:text="${booking.owner.contactNumber}"></td>
+						<td th:text ="'£' + ${booking.totalCost}"></td>
+						<td th:each="cat:booking.cats">
+							<table>
+								<tr>
+									<th></th>
+									<th>Cat's name</th>
+									<th>ChipNo</th>
+									<th>Food Plan</th>
+									<th>Vaccinated Date</th>
+									<th>Temperment</th>
+									<th>Litter Instructions</th>
+									<th>Other Information</th>
+								
+								</tr>
+								<tr>
+								<tr th:each="cat, catStat : ${booking.cats}">
+									<td th:text="${catStat.count}"></td>
+									<td th:text="${cat.name}"></td>
+									<td th:text="${cat.chipNo}"></td>
+									<td th:text="${cat.food}"></td>
+									<td th:text="${cat.vaccinatedDate}"></td>
+									<td th:text="${cat.temperment}"></td>
+									<td th:text="${cat.litterType}"></td>
+									<td th:text="${cat.otherInformation}"></td>
+									
+								
+								</tr>
+							</table>
+						</td>
+						<td><a href="#"
+							th:href="@{/admin/room/booking/delete/} + ${booking.bookingNo}">Delete
+								Booking </a></td>
+
+					</tr>
+
+				</table>
+
+			</div>
+		</form>
+	</div>
+</body>
+</html>

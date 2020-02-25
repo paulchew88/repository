@@ -45,6 +45,7 @@ public class Owner {
 	@NotBlank(message = "Number is mandatory")
 	@Pattern(regexp="[\\d]{11}", message = "must be a valid phone number including area code")
 	private String contactNumber;
+	private Boolean cctv;
 	
 	@OneToMany()
 	private List<Cat> cats;
@@ -107,6 +108,14 @@ public class Owner {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+	public Boolean getCctv() {
+		return cctv;
+	}
+
+	public void setCctv(Boolean cctv) {
+		this.cctv = cctv;
+	}
+
 	public void addCat(Cat cat) {
 		this.cats.add(cat);
 	}

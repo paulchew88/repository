@@ -25,15 +25,9 @@
 
 		<h1>Rooms</h1>
 		<h3>
-			<a href="/newRoom">Add Room</a>
+			<a href="/admin/newRoom">Add Room</a>
 		</h3>
-		<h3>
-			<a href="/availability">availability</a>
 
-		</h3>
-		<h3>
-			<a href="#" th:href="@{/newBooking}">Add Booking</a>
-		</h3>
 		<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
 		<table class="table table-striped">
@@ -48,9 +42,9 @@
 				<td th:text="${room.roomType}"></td>
 
 
-				<td><a href="#" th:href="@{/room/update/} + ${room.roomNo}">Edit</a>
-					<a href="#" th:href="@{/room/delete/} + ${room.roomNo}">delete</a>
-					<a href="#" th:href="@{/room/booking/} + ${room.roomNo}">View
+				<td><a href="#" th:href="@{/admin/room/update/} + ${room.roomNo}">Edit</a>
+					<a href="#" th:href="@{admin/room/delete/} + ${room.roomNo}">delete</a>
+					<a href="#" th:href="@{/staff/room/booking/} + ${room.roomNo}">View
 						Bookings</a>
 			</tr>
 		</table>

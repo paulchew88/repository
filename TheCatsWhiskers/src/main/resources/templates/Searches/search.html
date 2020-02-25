@@ -12,33 +12,28 @@
 	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
 		<a class="navbar-brand" href="/">Home</a>
 	</nav>
-	<h1>Booking Form</h1>
-	<div class="alert alert-danger" th:if="${error != null}" th:text="${error}">
-		</div>
+	<h1>Customer Form</h1>
 	<div class="form-container" align="left">
-	
-		
-		<form action="#" th:action="@{/newBooking}" th:object="${booking}"
-			method="post" align="right">
-			
+		<form action="#" th:action="@{/searchResult}" th:object="${Booking}" method="post"
+			align="right">
+
+			<h3>search for bookings by date</h3>
 			<p>
-				Check in Date: <input type="date" th:field="*{checkInDate}" />
+				Check in Date: <input type="date" />
 			</p>
 			<p>
-				check out date: <input type="date" th:field="*{checkOutDate}" />
+				Check out Date: <input type="date" />
 			</p>
-			
-			
+			<h3>Search for room by number</h3>
+			<h4>Add dates for better search</h4>
 			<p>
-				owner: <input type="text" th:field="${owner.email}" />
+				<input type="text" />
 			</p>
-			
+			<h3>Search for Owner by Email</h3>
 			<p>
-				Room: <input type="text" th:object = "${room}" th:field="*{roomNo}" />
+				<input type="text" />
 			</p>
-			<p> CCTV: <input type ="checkbox" th:field="*{cctv}" th:value = "${cctv}">
-			</p>		
-				
+
 			<p>
 				<input type="submit" value="Submit" /> <input type="reset"
 					value="Reset" />

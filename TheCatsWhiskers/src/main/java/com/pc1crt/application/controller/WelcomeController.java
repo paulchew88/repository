@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -14,6 +15,8 @@ import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -37,6 +40,29 @@ public class WelcomeController {
 	RoomRepository roomRepository;
 	@Autowired
 	BookingRepository bookingRepository;
+	@Autowired
+	OwnerRepository ownerRepository;
+
+	@Controller
+	public class MyController {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		@RequestMapping("/login")
+		public String handleRequest(HttpServletRequest request, Model model) {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			
+			model.addAttribute("name", auth.getName());
+			System.out.println(auth.getName());
+			return "start";
+		}
+	}
+
+	@GetMapping("/login")
+	public String login(Model model) {
+		String auth = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		return "login";
+
+	}
 
 	@GetMapping("/")
 	public String main(Model model) {
@@ -44,79 +70,29 @@ public class WelcomeController {
 		return "start"; // view
 	}
 
-	@GetMapping("/login")
-	public String login(Model model) {
-		return "login";
-
-	}
-
-	@GetMapping("/availability")
+	@GetMapping("/staff/availability")
 	public String availability(Model model) {
-		
+
 		List<Room> rooms = roomRepository.findAll();
-		
+		List<Booking> bookings = new ArrayList<Booking>();
 		for (Room room : rooms) {
-			if (room.findBooking(LocalDate.now(), LocalDate.now()) == null) {
-				room.setAvailable(true);
-			} else {
+
+			if (room.findBooking(LocalDate.now(), LocalDate.now()) != null) {
+				bookings.addAll(room.findBookings(LocalDate.now(), LocalDate.now()));
 				room.setAvailable(false);
+
+			} else {
+				room.setAvailable(true);
 			}
+
 		}
-
+		model.addAttribute("bookings", bookings);
 		model.addAttribute("rooms", rooms);
-
-		return "Lists/availability";
-
-	}
-	@GetMapping("/availabilitys")
-	public String availabilitys(Model model) {
-		System.out.println(LocalDate.now());
-		Set<Booking> bookings = bookingRepository.findByCheckInDateBeforeAndCheckOutDateAfter(LocalDate.now(),
-				LocalDate.now());
-		List<Room> rooms = roomRepository.findAll();
-		for (Room room : rooms) {
-			for (Booking booking : bookings) {
-				if (room.getRoomNo() == booking.getRoom().getRoomNo()) {
-					room.setAvailable(false);
-				} else {
-					room.setAvailable(true);
-				}
-			}
-		}
-		
-		model.addAttribute("rooms", rooms);
-		return "Lists/availability";
+		return "Lists/todaysCats";
 
 	}
 
-	//tried to show 2 separate Lists but could not persist a list within a list object
-	
-	/*@GetMapping("/room/availability")
-	public String roomAvailability(Model model) {
-		Set<Booking> bookings = bookingRepository.findByCheckInDateBeforeAndCheckOutDateAfter(LocalDate.now(),
-				LocalDate.now());
-		List<Room> rooms = roomRepository.findAll();
-		List<Room> tempRoom = new ArrayList<Room>();
-		System.out.println(rooms);
-		for (Booking b : bookings) {
-			if (!bookings.isEmpty()) {
-				for (Room r : rooms) {
-					System.out.println(r);
-					if(b.getRoom().getRoomNo() != r.getRoomNo()) {
-						Room room = r;
-						tempRoom.add(room);
-					}
-				}
-			}
-
-		}
-	model.addAttribute("bookings", bookings);
-	model.addAttribute("rooms", tempRoom);
-
-		return "/Lists/roomAvailability";
-	}*/
-
-	@GetMapping("/room/cats/{id}")
+	@GetMapping("/staff/room/cats/{id}")
 	public String showCats(@PathVariable Integer id, Model model) {
 		Room room = roomRepository.findByRoomNo(id);
 		Booking booking = room.findBooking(LocalDate.now(), LocalDate.now());

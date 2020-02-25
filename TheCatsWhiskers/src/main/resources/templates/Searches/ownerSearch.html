@@ -1,37 +1,39 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<title>Paul's playground</title>
-
+<title>Owner Search</title>
 <link rel="stylesheet"
-	th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/main.css}" />
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-
 <body>
-
 	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
-		<a class="navbar-brand" href="/">Home</a> <a href="/login"> Login
-		</a>
+		<a class="navbar-brand" href="/">Home</a>
+		<table align="right">
+			<tr>
+				<td><a href="/login">Login</a></td>
 
-
-
-
-
+			</tr>
+		</table>
 	</nav>
-
-	<main role="main" class="container">
-
-
-		<h1>Customers</h1>
+	<h1>Customer Search</h1>
+	<h3>
+		<a href="/staff/owners">List All Owners</a>
+	</h3>
+	<div class="alert alert-danger" th:if="${error != null}"
+		th:text="${error}"></div>
+		<a href="/staff/newCustomer"> Add New Customer </a>
+	<div class="form-container" align="left">
+		<form th:object="${owner}" th:action="@{/staff/search/owner}" method="get">
+        <input type="text" name="search" id="search"/>
+        <input type="submit" value="Search"/>
+        <div th:if="${not #lists.isEmpty(search)}">
+        
 		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}">
 		</div>
-		<a href="/newCustomer"> Add New Customer </a>
+		
 		
 		<table class="table table-striped">
 			<tr>
@@ -42,7 +44,7 @@
 				<th>Contact Number</th>
 				<th>Actions</th>
 			</tr>
-			<tr th:each="owner : ${owners}">
+			<tr th:each="owner : ${search}">
 				<td th:text="${owner.firstName}"></td>
 				<td th:text="${owner.surName}"></td>
 				<td th:text="${owner.email}"></td>
@@ -58,12 +60,8 @@
 			</tr>
 		</table>
 		
-
-
-
-	</main>
-
-
-
+        </div>
+    </form>
+	</div>
 </body>
 </html>

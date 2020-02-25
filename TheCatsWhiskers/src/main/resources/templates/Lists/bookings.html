@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Paul's playground</title>
+
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/">Home</a>
+
+	</nav>
+
+	<main role="main" class="container">
+
+
+		<h1>Booking Details</h1>
+		<a href="/booking">Back to bookings</a>
+		<table class="table table-striped" align = "right">
+			<tr>
+				<th>Name</th>
+				<th>Room Number</th>
+				<th>Check in date</th>
+				<th>Check out Date</th>
+				<th>Email</th>
+				<th>Address</th>
+				<th>Contact Number</th>
+				<th>Cat info</th>
+				<th>actions</th>
+
+
+				<th>Actions</th>
+			</tr>
+			<tr th:each="booking : ${bookings}">
+				<td th:text="${booking.owner.firstName} + ' ' + ${booking.owner.surName}"></td>
+				<td th:text="${booking.Room.roomNo}"></td>
+				<td th:text="${booking.checkInDate}"></td>
+				<td th:text="${booking.checkOutDate}"></td>
+				<td th:text="${booking.owner.email}"></td>
+				<td th:text="${booking.owner.address}"></td>
+				<td th:text="${booking.owner.contactNumber}"></td>
+				<td th:each="cat:booking.cats">
+					<table>
+						<tr>
+						<tr th:each="cat, catStat : ${booking.cats}">
+							<td th:text="${catStat.count}"></td>
+							<td th:text="${cat.name}"></td>
+							<td th:text="${cat.chipNo}"></td>
+							<td th:text="${cat.food}"></td>
+							<td th:text="${cat.vaccinatedDate}"></td>
+							<td th:text="${cat.temperment}"></td>
+							<td th:text="${cat.litterType}"></td>
+							<td th:text="${cat.otherInformation}"></td>
+							<td><a href= "/staff/cats/checkin/ + ${cat.chipNo}">Check in/out</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+
+			</tr>
+		</table>
+
+
+
+
+	</main>
+
+
+
+</body>
+</html>

@@ -20,23 +20,37 @@
 		<a class="navbar-brand" href="home">Paulchew</a>
 		<table>
 			<tr>
-				<td><a href="login">Login</a></td>
+				<td><a href="logout">Logout</a></td>
 			
 			</tr>
 		</table>
 	</nav>
+	  <p>This is User Profile\Index. Only authenticated people can see this</p>
+    <table>
+        <tr>
+            <td>Username</td>
+            <td><span sec:authentication="name"></span></td>
+        </tr>
+        <tr>
+            <td>Authorities</td>
+            <td><span sec:authentication="principal.authorities"></span></td>
+        </tr>
+    </table>
 <body>
 	<h2>Welcome to the cats whiskers hotel.</h2>
 	<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
 	<h3>
-		<a href="/owners">List of Owners</a>
+		<a href="/staff/owners">List of Owners</a>
 	</h3>
 	<h3>
-		<a href="/rooms">List of Rooms</a>
+		<a href="/staff/rooms">List of Rooms</a>
 	</h3>
 	<h3>
-		<a href="/availability">Availability</a>
+		<a href="/staff/booking">List of Bookings</a>
+	</h3>
+	<h3>
+		<a href="/staff/availability">Todays rooms</a>
 	</h3>
 
 </body>

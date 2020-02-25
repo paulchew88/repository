@@ -24,7 +24,7 @@
 
 
 		<h1>Bookings</h1>
-		<a href="/rooms">Back to rooms</a>
+		<a href="/staff/rooms">Back to rooms</a>
 		<table class="table table-striped">
 			<tr>
 				<th>Check In Date</th>
@@ -43,8 +43,8 @@
 
 
 				<td><a href="#"
-					th:href="@{/booking/update/} + ${booking.bookingNo}">Edit</a> <a
-					href="#" th:href="@{/room/booking/delete/} + ${booking.bookingNo}">Delete
+					th:href="@{/staff/booking/update/} + ${booking.bookingNo}">Edit</a> <a
+					href="#" th:href="@{/staff/room/booking/delete/} + ${booking.bookingNo}">Delete
 						Booking </a></td>
 
 			</tr>

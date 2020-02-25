@@ -52,6 +52,7 @@ public class Cat {
 	private String temperment;
 	private String litterType;
 	private String otherInformation;
+	private Boolean checkedIn;
 
 
 	public Cat() {
@@ -131,6 +132,14 @@ public class Cat {
 
 	public void setOtherInformation(String otherInformation) {
 		this.otherInformation = otherInformation;
+	}
+
+	public Boolean getCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(Boolean checkedIn) {
+		this.checkedIn = checkedIn;
 	}
 
 	public void addBooking(Booking booking) {

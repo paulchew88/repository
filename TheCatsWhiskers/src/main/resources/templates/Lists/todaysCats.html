@@ -1,5 +1,4 @@
-
-</html><!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
@@ -30,24 +29,34 @@
 			<tr>
 				<th>Room Number</th>
 				<th>Availability</th>
-				<th>Actions</th>
+				<th>Bookings</th>
 
 			</tr>
 			<tr th:each="room : ${rooms}">
 				<td th:text="${room.roomNo}"></td>
-				<td th:text="${room.available} ?'Available': 'Unavailable'"></td>
-				<td><span th:if="${room.available == true}"><a href="#"
-						th:href="@{/staff/booking/new/} + ${room.roomNo}">Book Room</a></span> <span
-					th:if="${room.available == false}">Room is already booked</span></td>
+				<td th:text="${room.available} ?'Available': 'Booked'"></td>
+				<td><span th:if="${room.available == true}">no Bookings	to show</span>
+				 <span th:if="${room.available == false}">
+						<table>
+							<tr th:each="booking :${bookings}">
+								<span th:if="${booking.room.roomNo} == ${room.roomNo}">
+									<table>
 
+										<tr th:each="cat,catStat :${booking.cats}">
+											<td th:text="${catStat.count}"></td>
+											<td th:text="${cat.name}"></td>
 
-
-
-
-
+										</tr>
+									</table>
+									</span>
+							</tr>
+						
+						
+				</span>
+				</td>
 			</tr>
 		</table>
-		
+
 
 
 
@@ -56,4 +65,3 @@
 
 
 </body>
-</html>

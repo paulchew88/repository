@@ -24,7 +24,7 @@
 
 
 		<h1>availability</h1>
-		<a href="/owners">Back to Owners</a>
+		<a href="/staff/owners">Back to Owners</a>
 		<table class="table table-striped">
 			<tr>
 				<th>Name</th>
@@ -45,10 +45,10 @@
 				<td th:text="${cat.temperment}"></td>
 				<td th:text="${cat.litterType}"></td>
 				<td th:text="${cat.otherInformation}"></td>
-				<td><a href="#" th:href="@{/cat/update/} + ${cat.chipNo}">Edit</a>
+				<td><a href="#" th:href="@{/staff/cat/update/} + ${cat.chipNo}">Edit</a>
 			</tr>
 		</table>
-		<a href="/rooms">Back to Rooms</a>
+		<a href="/staff/rooms">Back to Rooms</a>
 
 
 

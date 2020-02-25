@@ -17,7 +17,7 @@
 	<div class="alert alert-danger" th:if="${error != null}" th:text="${error}">
 		</div>
 	<div class="form-container" align="left">
-		<form action="#" th:action="@{/addCats/{id}(id=${booking.bookingNo})}" th:object="${booking}"
+		<form action="#" th:action="@{/staff/addCats/{id}(id=${booking.bookingNo})}" th:object="${booking}"
 			method="post" align="left">
 			<input type="hidden" th:field="*{bookingNo}" id="bookingNo" placeholder="bookingNo"/>
 			<h3>Which Cats are staying in this booking?</h3>

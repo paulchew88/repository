@@ -19,6 +19,10 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
 	public Set<Booking> findByCheckInDateBeforeAndCheckOutDateAfter(LocalDate now, LocalDate now2);
 
+	public Set<Booking> findByCheckInDateBetween(LocalDate date1, LocalDate date2);
+
+	public Set<Booking> findByCheckInDateBetweenAndRoomRoomNoEquals(LocalDate parse, LocalDate parse2, int i);
+
 
 
 }
