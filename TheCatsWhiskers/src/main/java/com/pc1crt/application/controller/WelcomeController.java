@@ -46,10 +46,11 @@ public class WelcomeController {
 	@Controller
 	public class MyController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 		@RequestMapping("/login")
 		public String handleRequest(HttpServletRequest request, Model model) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			
+
 			model.addAttribute("name", auth.getName());
 			System.out.println(auth.getName());
 			return "start";
@@ -59,7 +60,7 @@ public class WelcomeController {
 	@GetMapping("/login")
 	public String login(Model model) {
 		String auth = SecurityContextHolder.getContext().getAuthentication().getName();
-		
+
 		return "login";
 
 	}
@@ -100,4 +101,10 @@ public class WelcomeController {
 		return "/Lists/bookingViewCats";
 
 	}
+
+	@GetMapping("/error/403")
+	public String accesssDenied() {
+		return "/error/403";
+	}
+
 }

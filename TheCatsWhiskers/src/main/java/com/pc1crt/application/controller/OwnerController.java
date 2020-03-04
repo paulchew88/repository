@@ -67,7 +67,7 @@ public class OwnerController {
 		return "UpdateForms/updateOwner";
 	}
 
-	@PostMapping("/owner/update/{id}")
+	@PostMapping("/staff/owner/update/{id}")
 	public String updateOwner(@PathVariable Integer id, @Valid Owner owner, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			owner.setCustomerNumber(id);
@@ -76,7 +76,7 @@ public class OwnerController {
 
 		ownerRepository.save(owner);
 
-		return "redirect:/owners";
+		return "redirect:/staff/owners";
 	}
 
 	@RequestMapping("/admin/owner/delete/{id}")

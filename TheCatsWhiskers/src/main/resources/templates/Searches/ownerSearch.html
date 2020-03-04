@@ -14,7 +14,7 @@
 		<table>
 			<tr>
 				<td><a href="/logout">Logout</a></td>
-			
+
 			</tr>
 		</table>
 	</nav>
@@ -24,44 +24,47 @@
 	</h3>
 	<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
-		<a href="/staff/newCustomer"> Add New Customer </a>
-	<div class="form-container" align="left">
-		<form th:object="${owner}" th:action="@{/staff/search/owner}" method="get">
-        <input type="text" name="search" id="search"/>
-        <input type="submit" value="Search"/>
-        <div th:if="${not #lists.isEmpty(search)}">
-        
-		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}">
-		</div>
-		
-		
-		<table class="table table-striped">
-			<tr>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-				<th>Address</th>
-				<th>Contact Number</th>
-				<th>Actions</th>
-			</tr>
-			<tr th:each="owner : ${search}">
-				<td th:text="${owner.firstName}"></td>
-				<td th:text="${owner.surName}"></td>
-				<td th:text="${owner.email}"></td>
-				<td th:text="${owner.address}"></td>
-				<td th:text="${owner.contactNumber}"></td>
-				<td><a href="#" th:href="@{/staff/owner/update/} + ${owner.customerNumber}">Edit</a>
-					<a href="#" th:href="@{/admin/owner/delete/} + ${owner.customerNumber}">Delete</a>
-					<a href="#" th:href="@{/staff/owner/cat/} + ${owner.customerNumber}">View Cats</a> 
-					<a href="#"	th:href="@{/staff/owner/cat/add/} + ${owner.customerNumber}">Add Cat</a>
+	<a href="/staff/newCustomer"> Add New Customer </a>
+	<div class="form-container">
+		<form th:object="${owner}" th:action="@{/staff/search/owner}"
+			method="get">
+			<input type="text" name="search" id="search" /> <input type="submit"
+				value="Search" />
+			<div th:if="${not #lists.isEmpty(search)}"></div>
 
-				</td>
-
-			</tr>
-		</table>
-		
-        </div>
-    </form>
+				<div class="alert alert-danger" th:if="${error != null}"
+					th:text="${error}"></div>
+		</form>
 	</div>
+	<div>
+	<table class="table table-striped">
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Address</th>
+			<th>Contact Number</th>
+			<th>Actions</th>
+		</tr>
+		<tr th:each="owner : ${search}">
+			<td th:text="${owner.firstName}"></td>
+			<td th:text="${owner.surName}"></td>
+			<td th:text="${owner.email}"></td>
+			<td th:text="${owner.address}"></td>
+			<td th:text="${owner.contactNumber}"></td>
+			<td><a href="#"
+				th:href="@{/staff/owner/update/} + ${owner.customerNumber}">Edit</a>
+				<a href="#"
+				th:href="@{/admin/owner/delete/} + ${owner.customerNumber}">Delete</a>
+				<a href="#" th:href="@{/staff/owner/cat/} + ${owner.customerNumber}">View
+					Cats</a> <a href="#"
+				th:href="@{/staff/owner/cat/add/} + ${owner.customerNumber}">Add
+					Cat</a></td>
+
+		</tr>
+	</table>
+
+	</div>
+
 </body>
 </html>

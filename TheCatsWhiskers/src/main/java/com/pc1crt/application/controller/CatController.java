@@ -32,14 +32,10 @@ public class CatController {
 
 	@Autowired
 	CatRepository catRepository;
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 	@GetMapping("/staff/cats")
 	public String main(Model model) {
 		model.addAttribute("cats", catRepository.findAll());
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		model.addAttribute("name", auth.getName());
-		System.out.println(auth.getName());
 		return "ownerCatList";
 	}
 

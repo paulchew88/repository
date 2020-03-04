@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,18 +22,62 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @Table(name = "users")
 public class User {
 
-    @Id
+    /**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
+
+	/**
+	 * @param permissions the permissions to set
+	 */
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     @Column(nullable = false)
+    @NotBlank
     private String userName;
 
     @Column(nullable = false)
+    
     private String password;
 
     private Boolean active;
-
+    @NotBlank
     private String roles = "";
 
     private String permissions = "";
@@ -45,13 +90,13 @@ public class User {
         this.active = true;
     }
 
-    protected User(){}
+    public User(){}
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return userName;
     }
 

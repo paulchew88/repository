@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Form Submission</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-black bg-dark fixed-top">
+		<a class="navbar-brand" href="/home">Home</a>
+		<table>
+			<tr>
+				<td><a href="/logout">Logout</a></td>
+
+			</tr>
+		</table>
+	</nav>
+	<h1>Update users</h1>
+	<h3>
+		<a href="/admin/users">Back to Users</a>
+	</h3>
+	
+	<div class="form-container" align="left">
+		<form action="#"
+			th:action="@{/admin/users/new}"
+			th:object="${user}" method="post" align="right">
+
+			<p>
+				<input type="hidden" th:field="*{id}" id="id" placeholder="id">
+
+			</p>
+
+
+		
+
+			<p>
+				<label for="userName">User Name</label> <input type="text"
+					th:field="*{userName}" id="userName" placeholder="userName">
+			</p>
+			<p>
+				<label for="password">Password</label> <input type="password"
+					th:field="*{password}" id="password" placeholder="password">
+			</p>
+			<p>
+				<label for="active">Activated</label> <input type="checkbox"
+					th:field="*{active}" id="active" placeholder="active">
+			</p>
+			<p>
+				<label for="roles">Roles (ADMIN / STAFF)</label> <input type="text"
+					th:field="*{roles}" id="roles" placeholder="roles">
+			</p>
+		
+			<p>
+				<input type="hidden" th:value = "none" th:field="*{permissions}" id="id" placeholder="permissions">
+
+			</p>
+			<p>
+				<input type="submit" value="Submit" /> <input type="reset"
+					value="Reset" />
+			</p>
+
+		</form>
+	</div>
+</body>
+</html>

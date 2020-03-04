@@ -57,22 +57,18 @@ public class BookingController {
 		return "/Searches/bookingSearch";
 	}
 
-	@RequestMapping(value = "/staff/newBooking", method = RequestMethod.POST)
+	@RequestMapping(value = "/newBooking", method = RequestMethod.POST)
 	public String submit(@Valid Room room, @ModelAttribute("booking") Booking booking, @ModelAttribute("owner") Owner owner,
 			BindingResult result, ModelMap model) throws Exception {
 
 		Owner newOwner = ownerRepository.findByEmailContaining(owner.getEmail());
-		// Set<Booking> bookings = booking.getRoom().getBookings();
-		System.out.println(newOwner);
-	
+			
 		booking.setRoom(room);
-		System.out.println(booking);
 		booking.setOwner(newOwner);
 
 		if (booking.getRoom().findBooking(booking.getCheckInDate(), booking.getCheckOutDate()) == null) {
 			bookingRepository.save(booking);
 			model.addAttribute(booking);
-			System.out.println(booking);
 			model.addAttribute("cats", booking.getOwner().getCats());
 
 			return "bookingAddCat";

@@ -35,8 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN").antMatchers("/staff/**")
 				.hasAnyRole("STAFF", "ADMIN").and().httpBasic().and().formLogin().successForwardUrl("/login")
-				.permitAll().and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/login");
+				.permitAll().and().exceptionHandling().accessDeniedPage("/error/403").and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 		;
 	}
 

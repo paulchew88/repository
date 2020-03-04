@@ -20,10 +20,10 @@
 	</nav>
 	<h1>Customer Form</h1>
 	<h3>
-		<a href="/owners">Back to owners</a>
+		<a href="/staff/owners">Back to owners</a>
 	</h3>
 	<div class="form-container" align="left">
-		<form action="#" th:action="@{/owner/update/{id}(id=${owner.customerNumber})}"
+		<form action="#" th:action="@{/staff/owner/update/{id}(id=${owner.customerNumber})}"
 			th:object="${owner}" method="post" align="right">
 			
 			<p>
